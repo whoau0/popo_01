@@ -12,6 +12,7 @@ import { ZeroWasteStorage } from './components/ZeroWasteStorage';
 import { SettingsModal } from './components/SettingsModal';
 import { ChefHat, ShoppingCart, Leaf, Sparkles, CheckCircle, Cpu, CheckCircle2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { Analytics } from '@vercel/analytics/react';
 
 export function App() {
   const [mealPlanData, setMealPlanData] = useState<MealCartData>(() => {
@@ -317,6 +318,9 @@ export function App() {
         onClose={() => setIsSettingsOpen(false)}
         onKeySaved={() => setHasCustomKey(!!getStoredGeminiKey())}
       />
+
+      {/* Vercel Analytics */}
+      <Analytics />
     </div>
   );
 }
