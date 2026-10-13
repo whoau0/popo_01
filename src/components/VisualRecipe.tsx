@@ -123,9 +123,14 @@ export const VisualRecipe: React.FC<VisualRecipeProps> = ({ day, familySize }) =
       {/* Visual Recipe Hero Banner */}
       <div className="relative h-48 sm:h-56 w-full bg-slate-900">
         <img
-          src={day.image_url}
+          src={day.image_url || 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=800&q=80'}
           alt={day.menu_name}
           className="w-full h-full object-cover opacity-80"
+          onError={(e) => {
+            const target = e.currentTarget;
+            target.onerror = null;
+            target.src = 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=800&q=80';
+          }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/40 to-transparent"></div>
 

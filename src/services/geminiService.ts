@@ -17,40 +17,45 @@ export function setStoredGeminiKey(key: string) {
   }
 }
 
-// Food category stock image fallbacks
-const FOOD_IMAGES: Record<string, string> = {
-  soup: 'https://images.unsplash.com/photo-1583032015879-bf6b864a6e87?auto=format&fit=crop&w=800&q=80',
-  stew: 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&q=80',
-  stirfry: 'https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=800&q=80',
-  rice: 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=800&q=80',
-  pork: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80',
-  tofu: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80',
-  dining: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80',
-  curry: 'https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?auto=format&fit=crop&w=800&q=80',
-  noodle: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=800&q=80',
-  salad: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80',
-  chicken: 'https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=800&q=80',
-  beef: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80',
-  egg: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=800&q=80',
-  default: 'https://images.unsplash.com/photo-1552611052-33e04de081de?auto=format&fit=crop&w=800&q=80',
+// Food category stock image fallbacks with verified high quality Unsplash photos
+export const FOOD_IMAGES: Record<string, string> = {
+  kimchiStew: 'https://images.unsplash.com/photo-1552611052-33e04de081de?auto=format&fit=crop&w=600&q=80',
+  soup: 'https://images.unsplash.com/photo-1583032015879-bf6b864a6e87?auto=format&fit=crop&w=600&q=80',
+  stew: 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=600&q=80',
+  stirfry: 'https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=600&q=80',
+  rice: 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=600&q=80',
+  pork: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80',
+  tofu: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80',
+  dining: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80',
+  curry: 'https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?auto=format&fit=crop&w=600&q=80',
+  noodle: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=600&q=80',
+  salad: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80',
+  chicken: 'https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=600&q=80',
+  beef: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80',
+  egg: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=600&q=80',
+  pancake: 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=600&q=80',
+  default: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=600&q=80',
 };
 
 export function assignImageByKeywords(name: string, isDining: boolean): string {
   if (isDining) return FOOD_IMAGES.dining;
-  const n = name.toLowerCase();
+  const n = (name || '').toLowerCase();
+  if (n.includes('김치찌개') || n.includes('김치 찌개') || (n.includes('김치') && n.includes('찌개'))) return FOOD_IMAGES.kimchiStew;
   if (n.includes('카레')) return FOOD_IMAGES.curry;
+  if (n.includes('김치전') || n.includes('파전') || n.includes('감자전') || n.includes('부침개') || n.includes(' 전') || n.includes('동그랑땡')) return FOOD_IMAGES.pancake;
   if (n.includes('찌개') || n.includes('국') || n.includes('탕')) return FOOD_IMAGES.soup;
-  if (n.includes('볶음') || n.includes('제육') || n.includes('불고기') || n.includes('두루치기')) return FOOD_IMAGES.stirfry;
-  if (n.includes('밥') || n.includes('덮밥') || n.includes('비빔밥') || n.includes('볶음밥')) return FOOD_IMAGES.rice;
-  if (n.includes('면') || n.includes('우동') || n.includes('파스타') || n.includes('국수')) return FOOD_IMAGES.noodle;
+  if (n.includes('볶음밥') || n.includes('덮밥') || n.includes('비빔밥') || n.includes('밥')) return FOOD_IMAGES.rice;
+  if (n.includes('제육') || n.includes('불고기') || n.includes('볶음') || n.includes('두루치기')) return FOOD_IMAGES.stirfry;
   if (n.includes('두부') || n.includes('순두부')) return FOOD_IMAGES.tofu;
   if (n.includes('닭') || n.includes('치킨')) return FOOD_IMAGES.chicken;
   if (n.includes('오리') || n.includes('돼지') || n.includes('삼겹')) return FOOD_IMAGES.pork;
-  if (n.includes('소고기') || n.includes('차돌')) return FOOD_IMAGES.beef;
-  if (n.includes('계란') || n.includes('달걀') || n.includes('전')) return FOOD_IMAGES.egg;
+  if (n.includes('소고기') || n.includes('차돌') || n.includes('소갈비')) return FOOD_IMAGES.beef;
+  if (n.includes('계란') || n.includes('달걀')) return FOOD_IMAGES.egg;
+  if (n.includes('면') || n.includes('우동') || n.includes('파스타') || n.includes('국수') || n.includes('라면')) return FOOD_IMAGES.noodle;
   if (n.includes('샐러드') || n.includes('다이어트')) return FOOD_IMAGES.salad;
   return FOOD_IMAGES.default;
 }
+
 
 // Candidate models for graceful failover
 const CANDIDATE_MODELS = [
@@ -162,11 +167,11 @@ export async function generateMealCartPlan(input: UserInputState): Promise<MealC
         throw new Error('weekly_plan array missing in model response');
       }
 
-      // Format weekly plan and images
+      // Format weekly plan and images - always guarantee valid high quality image
       parsed.weekly_plan = parsed.weekly_plan.map((day, idx) => ({
         ...day,
         id: day.id || `day-${idx + 1}`,
-        image_url: day.image_url || assignImageByKeywords(day.menu_name, day.is_dining_out),
+        image_url: assignImageByKeywords(day.menu_name, day.is_dining_out),
       }));
 
       // Ensure all purchase_urls are valid Coupang search URLs
