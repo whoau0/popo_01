@@ -20,7 +20,7 @@ const PRESETS = [
 ];
 
 const QUICK_PANTRY_SUGGESTIONS = [
-  '두부 1모', '대파 1대', '애호박 1/2개', '계란 4알', '양파 1개', '다진마늘 1T', '익은 김치', '스팸 1캔', '콩나물 1봉'
+  '돼지고기 앞다리살', '삼겹살 300g', '소고기 200g', '닭고기 1팩', '감자 3개', '두부 1모', '대파 1대', '애호박 1개', '계란 4알', '양파 2개', '익은 김치'
 ];
 
 export const InputPanel: React.FC<InputPanelProps> = ({
@@ -134,13 +134,17 @@ export const InputPanel: React.FC<InputPanelProps> = ({
 
       {/* 3. Pantry Items Tag Input */}
       <div className="space-y-2">
-        <label className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center justify-between">
-          <span className="flex items-center gap-1.5">
+        <div className="flex items-center justify-between">
+          <label className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
             <Tag className="w-3.5 h-3.5 text-brand-600" />
             냉장고 보유 재료 (우선 소진)
-          </span>
+          </label>
           <span className="text-[11px] text-brand-600 font-semibold">{inputState.pantryItems.length}개 보유</span>
-        </label>
+        </div>
+        <p className="text-[11px] bg-amber-50/80 text-amber-800 px-2.5 py-1.5 rounded-lg border border-amber-200/80 leading-relaxed flex items-center gap-1">
+          <span>🧂</span>
+          <span>간장, 고추장, 된장, 마늘, 참기름 등 기본 양념은 <strong>구비 전제</strong>로 풍성한 일품요리를 추천합니다.</span>
+        </p>
 
         {/* Tag input box */}
         <div className="flex gap-1.5">
