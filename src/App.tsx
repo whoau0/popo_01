@@ -10,7 +10,7 @@ import { VisualRecipe } from './components/VisualRecipe';
 import { SmartCart } from './components/SmartCart';
 import { ZeroWasteStorage } from './components/ZeroWasteStorage';
 import { SettingsModal } from './components/SettingsModal';
-import { ChefHat, ShoppingCart, Leaf, Sparkles, CheckCircle } from 'lucide-react';
+import { ChefHat, ShoppingCart, Leaf, Sparkles, CheckCircle, Cpu, CheckCircle2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export function App() {
@@ -39,6 +39,8 @@ export function App() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
   const [hasCustomKey, setHasCustomKey] = useState<boolean>(!!getStoredGeminiKey());
+  const [engineInfo, setEngineInfo] = useState<string>('');
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   // Save to LocalStorage whenever plan changes
   useEffect(() => {
@@ -54,14 +56,29 @@ export function App() {
     try {
       const newPlan = await generateMealCartPlan(userInput);
       setMealPlanData(newPlan);
-      setSelectedDayId(newPlan.weekly_plan[0]?.id || 'day-mon');
+
+      // Select first cooking day or first day
+      const firstValidDay = newPlan.weekly_plan.find((d) => !d.is_dining_out) || newPlan.weekly_plan[0];
+      if (firstValidDay) {
+        setSelectedDayId(firstValidDay.id);
+      }
+
+      const engineName = (newPlan as any).engine || 'Gemini AI';
+      setEngineInfo(engineName);
+
+      setToastMessage(`🎉 [${userInput.pantryItems.slice(0, 3).join(', ')}] 재료를 반영한 식단표가 생성되었습니다! (${engineName})`);
+      setTimeout(() => setToastMessage(null), 5000);
+
       confetti({ particleCount: 70, spread: 60, origin: { y: 0.5 } });
+
       saveMealPlanToSupabase(newPlan, {
         familySize: userInput.familySize,
         preset: userInput.dietaryPreset,
       });
     } catch (err) {
       console.error('Failed to generate meal plan:', err);
+      setToastMessage('⚠️ 식단 생성 중 오류가 발생했습니다. 다시 시도해 주세요.');
+      setTimeout(() => setToastMessage(null), 4000);
     } finally {
       setIsLoading(false);
     }
@@ -147,12 +164,24 @@ export function App() {
   };
 
   const handleResetPlan = () => {
+    localStorage.removeItem('MEALCART_SAVED_PLAN');
     setMealPlanData(INITIAL_MOCK_PLAN);
     setSelectedDayId('day-mon');
+    setEngineInfo('');
+    setToastMessage('식단표가 초기 예시 데이터로 리셋되었습니다.');
+    setTimeout(() => setToastMessage(null), 3000);
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
+    <div className="min-h-screen bg-slate-50 flex flex-col relative">
+      {/* Toast Notification */}
+      {toastMessage && (
+        <div className="fixed top-20 right-6 z-50 bg-slate-900 text-white text-xs sm:text-sm px-4 py-3 rounded-2xl shadow-xl flex items-center gap-2 animate-in slide-in-from-top border border-slate-700 max-w-md">
+          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+          <span className="leading-snug">{toastMessage}</span>
+        </div>
+      )}
+
       {/* Header */}
       <Header
         onOpenSettings={() => setIsSettingsOpen(true)}
@@ -164,14 +193,22 @@ export function App() {
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
         {/* Insight Banner */}
         {mealPlanData.summary_insight && (
-          <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-brand-600 text-white shadow-md flex items-start sm:items-center justify-between gap-3">
+          <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-brand-600 text-white shadow-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <div className="p-2 rounded-xl bg-white/20 backdrop-blur-xs text-white shrink-0">
                 <Sparkles className="w-5 h-5 text-amber-300" />
               </div>
-              <p className="text-xs sm:text-sm font-semibold leading-relaxed">
-                {mealPlanData.summary_insight}
-              </p>
+              <div>
+                <p className="text-xs sm:text-sm font-semibold leading-relaxed">
+                  {mealPlanData.summary_insight}
+                </p>
+                {engineInfo && (
+                  <div className="flex items-center gap-1.5 mt-1 text-[11px] text-emerald-100 font-medium">
+                    <Cpu className="w-3.5 h-3.5 text-amber-300" />
+                    <span>생성 엔진: {engineInfo}</span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         )}
