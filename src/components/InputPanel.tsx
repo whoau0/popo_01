@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { UserInputState, DayOfWeek } from '../types/mealcart';
-import { Users, Calendar, Plus, X, Sparkles, ChefHat, Tag, Utensils } from 'lucide-react';
+import { Users, Calendar, Plus, X, Sparkles, Tag, Utensils, Check } from 'lucide-react';
 
 interface InputPanelProps {
   inputState: UserInputState;
@@ -12,11 +12,11 @@ interface InputPanelProps {
 const DAYS_OF_WEEK: DayOfWeek[] = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일'];
 
 const PRESETS = [
-  { id: '한식 위주', label: '🍲 한식 위주', desc: '국/찌개와 든든한 밥상' },
-  { id: '원팬/초간단 요리', label: '🍳 원팬/초간단', desc: '설거지 적고 15분 컷' },
+  { id: '한식 위주', label: '🍲 한식 위주', desc: '국/찌개와 든든한 일품 밥상' },
+  { id: '원팬/초간단 요리', label: '🍳 원팬/초간단', desc: '설거지 적고 15분 컷 메인 요리' },
   { id: '저탄수/다이어트', label: '🥗 저탄수/식단', desc: '고단백 저염 웰빙식' },
-  { id: '아이용 순한맛', label: '👶 아이용 순한맛', desc: '안 맵고 영양 가득' },
-  { id: '가성비/절약', label: '💰 가성비/절약', desc: '식비 최소화 집중' },
+  { id: '아이용 순한맛', label: '👶 아이용 순한맛', desc: '자극적이지 않고 영양 가득' },
+  { id: '가성비/절약', label: '💰 가성비/절약', desc: '식비 최소화 및 재료 100% 소진' },
 ];
 
 const QUICK_PANTRY_SUGGESTIONS = [
@@ -62,24 +62,32 @@ export const InputPanel: React.FC<InputPanelProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col gap-6">
-      <div className="flex items-center gap-2 pb-3 border-b border-slate-100">
-        <div className="p-2 rounded-xl bg-brand-50 text-brand-600">
-          <ChefHat className="w-5 h-5" />
+    <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 border-2 border-forest shadow-solid flex flex-col gap-4 sm:gap-5 w-full">
+      {/* Header */}
+      <div className="border-b-2 border-forest/15 pb-3 sm:pb-4">
+        <div className="flex items-center justify-between">
+          <span className="font-script text-coral text-base sm:text-lg font-bold -mb-1 select-none">
+            Simple Customization
+          </span>
+          <span className="px-2 sm:px-2.5 py-0.5 rounded-full bg-forest text-lime text-[10px] font-black tracking-wider">
+            STEP 01
+          </span>
         </div>
-        <div>
-          <h2 className="text-base font-bold text-slate-900">식단 조건 & 냉장고 재고</h2>
-          <p className="text-xs text-slate-500">우리 가족 맞춤 식단 조건을 설정하세요</p>
-        </div>
+        <h2 className="text-lg sm:text-xl font-black text-forest tracking-tight">
+          식단 조건 & 냉장고 재고
+        </h2>
+        <p className="text-xs text-sage mt-0.5">
+          보유 재료를 입력하면 AI가 100% 알뜰 소진 식단을 설계합니다.
+        </p>
       </div>
 
       {/* 1. Family Size */}
-      <div className="space-y-2">
-        <label className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
-          <Users className="w-3.5 h-3.5 text-brand-600" />
+      <div className="space-y-1.5 sm:space-y-2">
+        <label className="text-xs font-black text-forest uppercase tracking-wider flex items-center gap-1.5">
+          <Users className="w-3.5 h-3.5 text-coral" />
           가족 구성원 (분량 계산)
         </label>
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-4 gap-1 sm:gap-1.5">
           {['1인', '2인', '3~4인', '5인 이상'].map((size) => {
             const active = inputState.familySize === size;
             return (
@@ -87,10 +95,10 @@ export const InputPanel: React.FC<InputPanelProps> = ({
                 key={size}
                 type="button"
                 onClick={() => onChange({ ...inputState, familySize: size })}
-                className={`py-2 px-1 text-xs font-semibold rounded-xl border transition-all text-center ${
+                className={`py-2 px-0.5 sm:px-1 text-[11px] sm:text-xs font-black rounded-xl border-2 transition-all text-center cursor-pointer ${
                   active
-                    ? 'bg-brand-600 text-white border-brand-600 shadow-sm shadow-brand-500/30'
-                    : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
+                    ? 'bg-forest text-lime border-forest shadow-solid-sm'
+                    : 'bg-cream-soft text-forest border-forest/20 hover:border-forest/50'
                 }`}
               >
                 {size}
@@ -101,14 +109,14 @@ export const InputPanel: React.FC<InputPanelProps> = ({
       </div>
 
       {/* 2. Dining Out / Delivery Days */}
-      <div className="space-y-2">
-        <label className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center justify-between">
-          <span className="flex items-center gap-1.5">
-            <Calendar className="w-3.5 h-3.5 text-brand-600" />
+      <div className="space-y-1.5 sm:space-y-2">
+        <div className="flex items-center justify-between">
+          <label className="text-xs font-black text-forest uppercase tracking-wider flex items-center gap-1.5">
+            <Calendar className="w-3.5 h-3.5 text-coral" />
             외식 / 배달 요일 (식단 제외)
-          </span>
-          <span className="text-[11px] font-normal text-slate-400">다중 선택 가능</span>
-        </label>
+          </label>
+          <span className="text-[10px] sm:text-[11px] text-sage font-medium">다중 선택</span>
+        </div>
         <div className="grid grid-cols-7 gap-1">
           {DAYS_OF_WEEK.map((day) => {
             const isSelected = inputState.diningOutDays.includes(day);
@@ -118,11 +126,11 @@ export const InputPanel: React.FC<InputPanelProps> = ({
                 key={day}
                 type="button"
                 onClick={() => toggleDiningOutDay(day)}
-                title={`${day} 외식/배달`}
-                className={`py-2 text-xs font-bold rounded-lg border transition-all ${
+                title={`${day} 외식/배달 제외`}
+                className={`py-2 text-[11px] sm:text-xs font-black rounded-xl border-2 transition-all cursor-pointer ${
                   isSelected
-                    ? 'bg-amber-500 text-white border-amber-500 shadow-sm'
-                    : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
+                    ? 'bg-coral text-white border-forest shadow-solid-sm'
+                    : 'bg-cream-soft text-forest border-forest/20 hover:border-forest/50'
                 }`}
               >
                 {shortName}
@@ -133,18 +141,22 @@ export const InputPanel: React.FC<InputPanelProps> = ({
       </div>
 
       {/* 3. Pantry Items Tag Input */}
-      <div className="space-y-2">
+      <div className="space-y-2 sm:space-y-2.5">
         <div className="flex items-center justify-between">
-          <label className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
-            <Tag className="w-3.5 h-3.5 text-brand-600" />
+          <label className="text-xs font-black text-forest uppercase tracking-wider flex items-center gap-1.5">
+            <Tag className="w-3.5 h-3.5 text-coral" />
             냉장고 보유 재료 (우선 소진)
           </label>
-          <span className="text-[11px] text-brand-600 font-semibold">{inputState.pantryItems.length}개 보유</span>
+          <span className="text-[11px] sm:text-xs font-black text-forest bg-lime px-2 py-0.5 rounded-full border border-forest">
+            {inputState.pantryItems.length}개 보유
+          </span>
         </div>
-        <p className="text-[11px] bg-amber-50/80 text-amber-800 px-2.5 py-1.5 rounded-lg border border-amber-200/80 leading-relaxed flex items-center gap-1">
-          <span>🧂</span>
-          <span>간장, 고추장, 된장, 마늘, 참기름 등 기본 양념은 <strong>구비 전제</strong>로 풍성한 일품요리를 추천합니다.</span>
-        </p>
+
+        {/* Basic seasoning notice */}
+        <div className="text-[11px] bg-cream-soft text-forest p-2 sm:p-2.5 rounded-xl border border-forest/15 leading-relaxed flex items-center gap-1.5 sm:gap-2">
+          <span className="text-sm shrink-0">🧂</span>
+          <span>간장·고추장·된장 등 기본 양념은 <strong>구비 전제</strong>로 일품 요리를 추천합니다.</span>
+        </div>
 
         {/* Tag input box */}
         <div className="flex gap-1.5">
@@ -158,13 +170,13 @@ export const InputPanel: React.FC<InputPanelProps> = ({
                 handleAddTag();
               }
             }}
-            placeholder="예: 애호박 1/2개, 두부 1모 (입력 후 Enter)"
-            className="flex-1 px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all placeholder:text-slate-400"
+            placeholder="예: 돼지고기 300g, 감자 2개 (Enter)"
+            className="flex-1 min-w-0 px-3 sm:px-4 py-2 sm:py-2.5 text-xs bg-cream-soft border-2 border-forest/25 rounded-xl sm:rounded-2xl text-forest placeholder:text-sage/60 focus:outline-none focus:border-forest focus:bg-white transition-all font-medium"
           />
           <button
             type="button"
             onClick={() => handleAddTag()}
-            className="px-3 py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded-xl transition-colors flex items-center gap-1"
+            className="px-3 sm:px-4 py-2 sm:py-2.5 bg-forest hover:bg-forest-light text-lime font-black text-xs rounded-xl sm:rounded-2xl transition-all border-2 border-forest shadow-solid-sm flex items-center gap-1 shrink-0 cursor-pointer"
           >
             <Plus className="w-3.5 h-3.5" />
             추가
@@ -172,22 +184,22 @@ export const InputPanel: React.FC<InputPanelProps> = ({
         </div>
 
         {/* Selected Tags list */}
-        <div className="flex flex-wrap gap-1.5 min-h-[36px] p-2 bg-slate-50/80 rounded-xl border border-slate-100">
+        <div className="flex flex-wrap gap-1.5 min-h-[38px] p-2 sm:p-2.5 bg-cream-soft rounded-xl sm:rounded-2xl border-2 border-forest/15">
           {inputState.pantryItems.length === 0 ? (
-            <span className="text-xs text-slate-400 py-1 px-2 italic">보유 재료를 추가해 보세요</span>
+            <span className="text-xs text-sage py-1 px-1 sm:px-2 italic font-medium">보유 중인 주재료를 추가해 보세요</span>
           ) : (
             inputState.pantryItems.map((item, idx) => (
               <span
                 key={idx}
-                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200 animate-in fade-in"
+                className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-black bg-white text-forest border-2 border-forest shadow-xs"
               >
-                {item}
+                <span>{item}</span>
                 <button
                   type="button"
                   onClick={() => handleRemoveTag(idx)}
-                  className="hover:text-emerald-950 p-0.5 rounded-full"
+                  className="hover:text-coral transition-colors p-0.5"
                 >
-                  <X className="w-3 h-3" />
+                  <X className="w-3 h-3 stroke-[3]" />
                 </button>
               </span>
             ))
@@ -195,15 +207,15 @@ export const InputPanel: React.FC<InputPanelProps> = ({
         </div>
 
         {/* Quick Suggestion Chips */}
-        <div className="pt-1">
-          <p className="text-[11px] text-slate-400 mb-1.5">자주 쓰는 재료 빠른 추가:</p>
+        <div>
+          <p className="text-[11px] text-sage font-bold mb-1.5">자주 쓰는 식재료 빠른 추가:</p>
           <div className="flex flex-wrap gap-1">
             {QUICK_PANTRY_SUGGESTIONS.map((sug) => (
               <button
                 key={sug}
                 type="button"
                 onClick={() => handleAddTag(sug)}
-                className="text-[11px] px-2 py-0.5 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-200 border border-slate-200 rounded-md text-slate-600 transition-colors"
+                className="text-[10px] sm:text-[11px] px-2 sm:px-2.5 py-0.5 sm:py-1 bg-white hover:bg-lime/40 border border-forest/20 rounded-full text-forest font-semibold transition-all hover:border-forest cursor-pointer"
               >
                 + {sug}
               </button>
@@ -213,12 +225,12 @@ export const InputPanel: React.FC<InputPanelProps> = ({
       </div>
 
       {/* 4. Dietary Presets */}
-      <div className="space-y-2">
-        <label className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
-          <Utensils className="w-3.5 h-3.5 text-brand-600" />
+      <div className="space-y-1.5 sm:space-y-2">
+        <label className="text-xs font-black text-forest uppercase tracking-wider flex items-center gap-1.5">
+          <Utensils className="w-3.5 h-3.5 text-coral" />
           식단 성향 프리셋
         </label>
-        <div className="grid grid-cols-1 gap-1.5">
+        <div className="grid grid-cols-1 gap-1.5 sm:gap-2">
           {PRESETS.map((preset) => {
             const active = inputState.dietaryPreset === preset.id;
             return (
@@ -226,17 +238,21 @@ export const InputPanel: React.FC<InputPanelProps> = ({
                 key={preset.id}
                 type="button"
                 onClick={() => onChange({ ...inputState, dietaryPreset: preset.id })}
-                className={`p-2.5 rounded-xl border text-left transition-all flex items-center justify-between ${
+                className={`p-2.5 sm:p-3 rounded-xl sm:rounded-2xl border-2 text-left transition-all flex items-center justify-between cursor-pointer ${
                   active
-                    ? 'bg-brand-50/80 border-brand-500 text-brand-900 ring-1 ring-brand-500'
-                    : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
+                    ? 'bg-lime/25 border-forest shadow-solid-sm text-forest'
+                    : 'bg-cream-soft border-forest/20 hover:border-forest/50 text-forest'
                 }`}
               >
-                <div>
-                  <div className="text-xs font-bold">{preset.label}</div>
-                  <div className="text-[11px] text-slate-500">{preset.desc}</div>
+                <div className="min-w-0 pr-2">
+                  <div className="text-xs font-black truncate">{preset.label}</div>
+                  <div className="text-[10px] sm:text-[11px] text-sage font-medium truncate">{preset.desc}</div>
                 </div>
-                {active && <span className="w-2 h-2 rounded-full bg-brand-600"></span>}
+                {active && (
+                  <span className="w-5 h-5 rounded-full bg-forest text-lime flex items-center justify-center shrink-0">
+                    <Check className="w-3 h-3 stroke-[3]" />
+                  </span>
+                )}
               </button>
             );
           })}
@@ -245,7 +261,7 @@ export const InputPanel: React.FC<InputPanelProps> = ({
 
       {/* 5. Additional Requests */}
       <div className="space-y-1.5">
-        <label className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+        <label className="text-xs font-black text-forest uppercase tracking-wider">
           기타 요청사항 (선택)
         </label>
         <input
@@ -253,26 +269,26 @@ export const InputPanel: React.FC<InputPanelProps> = ({
           value={inputState.additionalRequests}
           onChange={(e) => onChange({ ...inputState, additionalRequests: e.target.value })}
           placeholder="예: 금요일은 매운 안주 스타일로"
-          className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 placeholder:text-slate-400"
+          className="w-full px-3.5 sm:px-4 py-2 sm:py-2.5 text-xs bg-cream-soft border-2 border-forest/25 rounded-xl sm:rounded-2xl text-forest placeholder:text-sage/60 focus:outline-none focus:border-forest focus:bg-white font-medium"
         />
       </div>
 
-      {/* CTA Button */}
+      {/* Main Electric Lime Action Button */}
       <button
         type="button"
         onClick={onSubmit}
         disabled={isLoading}
-        className="w-full py-3.5 px-4 bg-gradient-to-r from-brand-600 to-emerald-500 hover:from-brand-700 hover:to-emerald-600 text-white text-sm font-extrabold rounded-2xl shadow-lg shadow-brand-500/25 transition-all transform active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full py-3.5 sm:py-4 px-4 sm:px-6 bg-lime hover:bg-lime-hover text-forest text-sm sm:text-base font-black rounded-full border-2 border-forest shadow-solid-lg transition-all active:translate-x-0.5 active:translate-y-0.5 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer uppercase tracking-wide"
       >
         {isLoading ? (
           <>
-            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+            <div className="w-5 h-5 border-3 border-forest border-t-transparent rounded-full animate-spin" />
             <span>AI 식단 생성 중...</span>
           </>
         ) : (
           <>
-            <Sparkles className="w-4 h-4 text-amber-300" />
-            <span>✨ 주간 식단표 생성하기</span>
+            <Sparkles className="w-5 h-5 text-forest" />
+            <span>AI 맞춤 주간 식단표 생성하기</span>
           </>
         )}
       </button>

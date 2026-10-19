@@ -10,7 +10,7 @@ import { VisualRecipe } from './components/VisualRecipe';
 import { SmartCart } from './components/SmartCart';
 import { ZeroWasteStorage } from './components/ZeroWasteStorage';
 import { SettingsModal } from './components/SettingsModal';
-import { ChefHat, ShoppingCart, Leaf, Sparkles, CheckCircle, Cpu, CheckCircle2 } from 'lucide-react';
+import { ChefHat, ShoppingCart, Leaf, Sparkles, Cpu, CheckCircle2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { Analytics } from '@vercel/analytics/react';
 
@@ -43,22 +43,18 @@ export function App() {
   const [engineInfo, setEngineInfo] = useState<string>('');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  // Save to LocalStorage whenever plan changes
   useEffect(() => {
     localStorage.setItem('MEALCART_SAVED_PLAN', JSON.stringify(mealPlanData));
   }, [mealPlanData]);
 
-  // Selected Day Object
   const selectedDay = mealPlanData.weekly_plan.find((d) => d.id === selectedDayId) || mealPlanData.weekly_plan[0];
 
-  // Handle Generate Plan
   const handleGeneratePlan = async () => {
     setIsLoading(true);
     try {
       const newPlan = await generateMealCartPlan(userInput);
       setMealPlanData(newPlan);
 
-      // Select first cooking day or first day
       const firstValidDay = newPlan.weekly_plan.find((d) => !d.is_dining_out) || newPlan.weekly_plan[0];
       if (firstValidDay) {
         setSelectedDayId(firstValidDay.id);
@@ -67,10 +63,10 @@ export function App() {
       const engineName = (newPlan as any).engine || 'Gemini AI';
       setEngineInfo(engineName);
 
-      setToastMessage(`🎉 [${userInput.pantryItems.slice(0, 3).join(', ')}] 재료를 반영한 식단표가 생성되었습니다! (${engineName})`);
+      setToastMessage(`🥑 [${userInput.pantryItems.slice(0, 3).join(', ')}] 재료를 반영한 식단표가 완성되었습니다!`);
       setTimeout(() => setToastMessage(null), 5000);
 
-      confetti({ particleCount: 70, spread: 60, origin: { y: 0.5 } });
+      confetti({ particleCount: 80, spread: 70, origin: { y: 0.5 } });
 
       saveMealPlanToSupabase(newPlan, {
         familySize: userInput.familySize,
@@ -85,7 +81,6 @@ export function App() {
     }
   };
 
-  // Swap Meals between two days
   const handleSwapDays = (sourceId: string, targetId: string) => {
     const sourceIndex = mealPlanData.weekly_plan.findIndex((d) => d.id === sourceId);
     const targetIndex = mealPlanData.weekly_plan.findIndex((d) => d.id === targetId);
@@ -96,7 +91,6 @@ export function App() {
     const sourceDay = updatedPlan[sourceIndex];
     const targetDay = updatedPlan[targetIndex];
 
-    // Swap meal properties while preserving the day structure (day_of_week, id)
     const newSource = {
       ...sourceDay,
       is_dining_out: targetDay.is_dining_out,
@@ -134,7 +128,6 @@ export function App() {
     });
   };
 
-  // Postpone Meal to the Next Day
   const handlePostponeDay = (sourceId: string) => {
     const sourceIndex = mealPlanData.weekly_plan.findIndex((d) => d.id === sourceId);
     if (sourceIndex === -1 || sourceIndex >= mealPlanData.weekly_plan.length - 1) return;
@@ -144,7 +137,6 @@ export function App() {
     setSelectedDayId(targetId);
   };
 
-  // Toggle Cart Item Checkbox
   const handleToggleCartItem = (category: keyof SmartCartType, itemId: string) => {
     if (!mealPlanData.smart_cart[category]) return;
 
@@ -174,12 +166,12 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col relative">
+    <div className="min-h-screen bg-cream text-forest flex flex-col relative font-sans w-full max-w-full overflow-x-hidden">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed top-20 right-6 z-50 bg-slate-900 text-white text-xs sm:text-sm px-4 py-3 rounded-2xl shadow-xl flex items-center gap-2 animate-in slide-in-from-top border border-slate-700 max-w-md">
-          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-          <span className="leading-snug">{toastMessage}</span>
+        <div className="fixed top-20 right-6 z-50 bg-forest text-white text-xs sm:text-sm px-5 py-3.5 rounded-2xl border-2 border-forest shadow-solid-lg flex items-center gap-3 animate-in slide-in-from-top max-w-md">
+          <CheckCircle2 className="w-5 h-5 text-lime shrink-0" />
+          <span className="leading-snug font-bold">{toastMessage}</span>
         </div>
       )}
 
@@ -191,21 +183,29 @@ export function App() {
       />
 
       {/* Main Content */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
-        {/* Insight Banner */}
+      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-4 sm:space-y-6 min-w-0">
+        {/* Insight Banner inspired by Pinterest Fresh Food Hero */}
         {mealPlanData.summary_insight && (
-          <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-brand-600 text-white shadow-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-white/20 backdrop-blur-xs text-white shrink-0">
-                <Sparkles className="w-5 h-5 text-amber-300" />
+          <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-forest text-white border-2 border-forest shadow-solid flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3.5">
+              <div className="w-12 h-12 rounded-2xl bg-lime text-forest flex items-center justify-center font-bold text-2xl shrink-0 border-2 border-forest shadow-xs">
+                🥑
               </div>
               <div>
-                <p className="text-xs sm:text-sm font-semibold leading-relaxed">
+                <div className="flex items-center gap-2">
+                  <span className="font-script text-coral text-base font-bold select-none">
+                    Smart Dietary Insight
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full bg-lime/20 text-lime text-[10px] font-black border border-lime/30">
+                    100% 소진 설계
+                  </span>
+                </div>
+                <p className="text-sm sm:text-base font-black leading-snug text-white mt-0.5">
                   {mealPlanData.summary_insight}
                 </p>
                 {engineInfo && (
-                  <div className="flex items-center gap-1.5 mt-1 text-[11px] text-emerald-100 font-medium">
-                    <Cpu className="w-3.5 h-3.5 text-amber-300" />
+                  <div className="flex items-center gap-1.5 mt-1 text-[11px] text-lime font-bold">
+                    <Cpu className="w-3.5 h-3.5 text-lime" />
                     <span>생성 엔진: {engineInfo}</span>
                   </div>
                 )}
@@ -215,9 +215,9 @@ export function App() {
         )}
 
         {/* Top Grid: Left (Input Panel) & Right (Weekly Calendar) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full min-w-0">
           {/* Left: Input Panel (4 Cols on Desktop) */}
-          <div className="lg:col-span-4">
+          <div className="lg:col-span-4 w-full min-w-0">
             <InputPanel
               inputState={userInput}
               onChange={setUserInput}
@@ -227,7 +227,7 @@ export function App() {
           </div>
 
           {/* Right: Weekly Calendar (8 Cols on Desktop) */}
-          <div className="lg:col-span-8 flex flex-col gap-6">
+          <div className="lg:col-span-8 w-full min-w-0 max-w-full flex flex-col gap-6 overflow-hidden">
             <WeeklyCalendar
               weeklyPlan={mealPlanData.weekly_plan}
               selectedDayId={selectedDayId}
@@ -239,45 +239,48 @@ export function App() {
               onPostponeDay={handlePostponeDay}
             />
 
-            {/* Bottom Tab Navigation */}
-            <div className="bg-white rounded-2xl p-1.5 shadow-sm border border-slate-200 flex items-center gap-1">
+            {/* Bottom Tab Navigation in Pinterest pill style */}
+            <div className="bg-white rounded-2xl sm:rounded-full p-1 sm:p-1.5 border-2 border-forest shadow-solid-sm flex items-center gap-1 sm:gap-1.5">
               <button
                 type="button"
                 onClick={() => setActiveTab('recipe')}
-                className={`flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 ${
+                className={`flex-1 py-2 sm:py-2.5 px-2 sm:px-3 rounded-xl sm:rounded-full text-xs sm:text-sm font-black transition-all flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer ${
                   activeTab === 'recipe'
-                    ? 'bg-brand-600 text-white shadow-md shadow-brand-500/20'
-                    : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                    ? 'bg-forest text-lime border-2 border-forest shadow-solid-sm'
+                    : 'text-forest hover:bg-cream-soft'
                 }`}
               >
-                <ChefHat className="w-4 h-4" />
-                <span>🍳 오늘의 상세 레시피 ({selectedDay?.day_of_week})</span>
+                <ChefHat className="w-4 h-4 shrink-0" />
+                <span className="hidden sm:inline">오늘의 상세 레시피 ({selectedDay?.day_of_week})</span>
+                <span className="sm:hidden">상세 레시피</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setActiveTab('cart')}
-                className={`flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 ${
+                className={`flex-1 py-2 sm:py-2.5 px-2 sm:px-3 rounded-xl sm:rounded-full text-xs sm:text-sm font-black transition-all flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer ${
                   activeTab === 'cart'
-                    ? 'bg-brand-600 text-white shadow-md shadow-brand-500/20'
-                    : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                    ? 'bg-forest text-lime border-2 border-forest shadow-solid-sm'
+                    : 'text-forest hover:bg-cream-soft'
                 }`}
               >
-                <ShoppingCart className="w-4 h-4" />
-                <span>🛒 스마트 장보기 카트</span>
+                <ShoppingCart className="w-4 h-4 shrink-0" />
+                <span className="hidden sm:inline">스마트 장보기 카트</span>
+                <span className="sm:hidden">장보기 카트</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setActiveTab('storage')}
-                className={`flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 ${
+                className={`flex-1 py-2 sm:py-2.5 px-2 sm:px-3 rounded-xl sm:rounded-full text-xs sm:text-sm font-black transition-all flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer ${
                   activeTab === 'storage'
-                    ? 'bg-brand-600 text-white shadow-md shadow-brand-500/20'
-                    : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                    ? 'bg-forest text-lime border-2 border-forest shadow-solid-sm'
+                    : 'text-forest hover:bg-cream-soft'
                 }`}
               >
-                <Leaf className="w-4 h-4" />
-                <span>💡 제로-웨이스트 보관법</span>
+                <Leaf className="w-4 h-4 shrink-0" />
+                <span className="hidden sm:inline">제로-웨이스트 보관법</span>
+                <span className="sm:hidden">보관법</span>
               </button>
             </div>
 
@@ -307,9 +310,23 @@ export function App() {
         </div>
       </main>
 
+      {/* Marquee Sponsor/Brand Banner inspired by Pinterest footer */}
+      <div className="mt-12 py-3 bg-lime border-y-2 border-forest overflow-hidden select-none">
+        <div className="max-w-7xl mx-auto px-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-forest font-black text-xs sm:text-sm tracking-wider uppercase text-center">
+          <span>🥑 FRESH HEALTHY MEALS</span>
+          <span>•</span>
+          <span>♻️ 100% ZERO-WASTE</span>
+          <span>•</span>
+          <span>🛒 SMART SHOPPING DEDUPLICATION</span>
+          <span className="hidden md:inline">•</span>
+          <span className="hidden md:inline">✨ AI PERSONALISED</span>
+        </div>
+      </div>
+
       {/* Footer */}
-      <footer className="mt-12 py-6 bg-white border-t border-slate-200 text-center text-xs text-slate-500">
-        <p>© 2026 MealCart AI. 냉장고 잔여 재료 기반 주간 가족 식단 & 스마트 장보기 솔루션.</p>
+      <footer className="py-8 bg-cream text-center text-xs text-sage font-medium">
+        <p className="font-bold text-forest">MealCart AI</p>
+        <p className="mt-1">냉장고 잔여 재료 기반 주간 가족 식단 & 스마트 장보기 솔루션.</p>
       </footer>
 
       {/* Settings Modal */}

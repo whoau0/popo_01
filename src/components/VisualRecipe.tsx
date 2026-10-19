@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MealPlanDay } from '../types/mealcart';
-import { ChefHat, Clock, Play, Pause, RotateCcw, AlertCircle, Sparkles, Check, Flame, Utensils } from 'lucide-react';
+import { ChefHat, Clock, Play, Pause, RotateCcw, AlertCircle, Check, Flame, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { FOOD_IMAGES } from '../services/geminiService';
 
 interface VisualRecipeProps {
   day: MealPlanDay;
@@ -9,7 +10,6 @@ interface VisualRecipeProps {
 }
 
 export const VisualRecipe: React.FC<VisualRecipeProps> = ({ day, familySize }) => {
-  // Timer state keyed by step index
   const [activeTimerStep, setActiveTimerStep] = useState<number | null>(null);
   const [secondsLeft, setSecondsLeft] = useState<number>(0);
   const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false);
@@ -17,7 +17,6 @@ export const VisualRecipe: React.FC<VisualRecipeProps> = ({ day, familySize }) =
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Play a simple synthesized pleasant audio chime using Web Audio API
   const playChimeSound = () => {
     try {
       const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
@@ -27,9 +26,9 @@ export const VisualRecipe: React.FC<VisualRecipeProps> = ({ day, familySize }) =
       const gain = ctx.createGain();
 
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(587.33, ctx.currentTime); // D5
-      osc.frequency.setValueAtTime(880, ctx.currentTime + 0.15); // A5
-      osc.frequency.setValueAtTime(1174.66, ctx.currentTime + 0.3); // D6
+      osc.frequency.setValueAtTime(587.33, ctx.currentTime);
+      osc.frequency.setValueAtTime(880, ctx.currentTime + 0.15);
+      osc.frequency.setValueAtTime(1174.66, ctx.currentTime + 0.3);
 
       gain.gain.setValueAtTime(0.3, ctx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.2);
@@ -103,107 +102,114 @@ export const VisualRecipe: React.FC<VisualRecipeProps> = ({ day, familySize }) =
 
   if (day.is_dining_out) {
     return (
-      <div className="bg-white rounded-2xl p-8 shadow-sm border border-slate-200 text-center flex flex-col items-center justify-center min-h-[360px]">
-        <div className="w-16 h-16 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mb-4 text-2xl shadow-inner">
-          🍽️
+      <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-10 border-2 border-forest shadow-solid text-center flex flex-col items-center justify-center min-h-[300px] sm:min-h-[360px]">
+        <div className="w-16 h-16 rounded-full bg-cream-soft text-coral flex items-center justify-center mb-4 text-3xl border-2 border-forest shadow-solid-sm">
+          🍕
         </div>
-        <h3 className="text-xl font-black text-slate-900 mb-2">{day.menu_name}</h3>
-        <p className="text-sm text-slate-600 max-w-md mb-6 leading-relaxed">
+        <span className="font-script text-coral text-lg font-bold select-none">
+          Relax & Enjoy
+        </span>
+        <h3 className="text-2xl font-black text-forest mb-2">{day.menu_name}</h3>
+        <p className="text-sm text-sage max-w-md mb-6 leading-relaxed font-medium">
           오늘은 집밥 조리 대신 가족들과 맛있는 외식 또는 좋아하는 배달 음식을 즐기며 편안한 시간을 보내는 날입니다.
         </p>
-        <span className="px-3 py-1 bg-amber-50 text-amber-700 text-xs font-bold rounded-full border border-amber-200">
-          주간 식비 & 조리 피로도 Zero 데이
+        <span className="px-4 py-1.5 bg-lime text-forest text-xs font-black rounded-full border-2 border-forest shadow-solid-sm">
+          조리 피로도 Zero 데이 ☕
         </span>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col">
-      {/* Visual Recipe Hero Banner */}
-      <div className="relative h-48 sm:h-56 w-full bg-slate-900">
+    <div className="bg-white rounded-2xl sm:rounded-3xl border-2 border-forest shadow-solid overflow-hidden flex flex-col">
+      {/* Hero Banner inspired by Pinterest Fresh Food */}
+      <div className="relative h-56 sm:h-64 w-full bg-forest">
         <img
-          src={day.image_url || 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=800&q=80'}
+          src={day.image_url || FOOD_IMAGES.default}
           alt={day.menu_name}
-          className="w-full h-full object-cover opacity-80"
+          className="w-full h-full object-cover opacity-85"
           onError={(e) => {
             const target = e.currentTarget;
             target.onerror = null;
-            target.src = 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=800&q=80';
+            target.src = FOOD_IMAGES.default;
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/40 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-forest/95 via-forest/40 to-transparent"></div>
 
-        {/* Hero Top Badges */}
+        {/* Top Badges */}
         <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
-          <span className="px-3 py-1 rounded-full text-xs font-bold bg-brand-500 text-white shadow-md flex items-center gap-1">
-            <Sparkles className="w-3.5 h-3.5 text-amber-200" />
-            {day.day_of_week}의 추천 요리
+          <span className="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-lime text-forest border-2 border-forest shadow-solid-sm flex items-center gap-1.5">
+            <Sparkles className="w-3.5 h-3.5" />
+            TODAY'S RECIPE
           </span>
-          <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-black/60 text-white backdrop-blur-xs border border-white/20">
+          <span className="px-3 py-1 rounded-full text-xs font-black bg-white text-forest border-2 border-forest shadow-solid-sm">
             기준: {familySize}
           </span>
         </div>
 
         {/* Hero Bottom Info */}
         <div className="absolute bottom-4 left-4 right-4 text-white">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-semibold text-emerald-300">{day.category || '가정식 한식'}</span>
-            <span className="text-xs text-slate-400">•</span>
-            <span className="text-xs text-slate-300 flex items-center gap-1">
-              <Clock className="w-3.5 h-3.5 text-amber-300" />
+          <div className="flex flex-wrap items-center gap-2 mb-1 text-xs">
+            <span className="font-black text-lime bg-forest/80 px-2 py-0.5 rounded-full border border-lime/30">
+              {day.category || '가정식 한식'}
+            </span>
+            <span className="text-white/40">•</span>
+            <span className="text-cream flex items-center gap-1 font-bold">
+              <Clock className="w-3.5 h-3.5 text-lime" />
               조리 시간: {day.cooking_time}
             </span>
             {day.calories_per_serving && (
               <>
-                <span className="text-xs text-slate-400">•</span>
-                <span className="text-xs text-slate-300 flex items-center gap-1">
-                  <Flame className="w-3.5 h-3.5 text-orange-400" />
+                <span className="text-white/40">•</span>
+                <span className="text-cream flex items-center gap-1 font-bold">
+                  <Flame className="w-3.5 h-3.5 text-coral" />
                   약 {day.calories_per_serving} kcal
                 </span>
               </>
             )}
           </div>
-          <h2 className="text-xl sm:text-2xl font-black tracking-tight">{day.menu_name}</h2>
+          <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-white drop-shadow-sm">
+            {day.menu_name}
+          </h2>
         </div>
       </div>
 
       {/* Content Container */}
-      <div className="p-5 sm:p-6 space-y-6">
+      <div className="p-4 sm:p-6 space-y-6">
         {/* Ingredients Used in this Menu */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3.5 bg-slate-50 rounded-xl border border-slate-200/80">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 bg-cream-soft rounded-2xl border-2 border-forest/15">
           <div>
-            <span className="text-xs font-bold text-emerald-800 flex items-center gap-1 mb-1.5">
-              <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-              냉장고 소진 재료:
+            <span className="text-xs font-black text-forest flex items-center gap-1.5 mb-2 uppercase tracking-wider">
+              <span className="w-2.5 h-2.5 rounded-full bg-forest"></span>
+              냉장고 소진 식재료:
             </span>
-            <div className="flex flex-wrap gap-1">
+            <div className="flex flex-wrap gap-1.5">
               {day.used_pantry_items?.length ? (
                 day.used_pantry_items.map((item, i) => (
-                  <span key={i} className="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold border border-emerald-200">
+                  <span key={i} className="text-xs px-2.5 py-1 rounded-full bg-white text-forest font-bold border border-forest/20 shadow-xs">
                     {item}
                   </span>
                 ))
               ) : (
-                <span className="text-xs text-slate-400">보유 재료 없음</span>
+                <span className="text-xs text-sage font-medium">보유 재료 없음</span>
               )}
             </div>
           </div>
 
           <div>
-            <span className="text-xs font-bold text-amber-800 flex items-center gap-1 mb-1.5">
-              <span className="w-2 h-2 rounded-full bg-amber-500"></span>
-              장보기 구매 재료:
+            <span className="text-xs font-black text-forest flex items-center gap-1.5 mb-2 uppercase tracking-wider">
+              <span className="w-2.5 h-2.5 rounded-full bg-coral"></span>
+              장보기 구매 식재료:
             </span>
-            <div className="flex flex-wrap gap-1">
+            <div className="flex flex-wrap gap-1.5">
               {day.used_shopping_items?.length ? (
                 day.used_shopping_items.map((item, i) => (
-                  <span key={i} className="text-xs px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-semibold border border-amber-200">
+                  <span key={i} className="text-xs px-2.5 py-1 rounded-full bg-coral/15 text-coral font-black border border-coral/30 shadow-xs">
                     {item}
                   </span>
                 ))
               ) : (
-                <span className="text-xs text-slate-400">추가 구매 재료 없음</span>
+                <span className="text-xs text-sage font-medium">추가 구매 재료 없음</span>
               )}
             </div>
           </div>
@@ -211,10 +217,14 @@ export const VisualRecipe: React.FC<VisualRecipeProps> = ({ day, familySize }) =
 
         {/* Step-by-Step Cooking Guide */}
         <div>
-          <h3 className="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
-            <ChefHat className="w-4 h-4 text-brand-600" />
-            단계별 비주얼 퀵-뷰 레시피 (Visual Steps)
-          </h3>
+          <div className="border-b-2 border-forest/15 pb-3 mb-4">
+            <span className="font-script text-coral text-lg font-bold select-none">
+              Step by Step Cooking
+            </span>
+            <h3 className="text-lg font-black text-forest">
+              단계별 비주얼 레시피 ({day.recipe_steps?.length || 0}단계)
+            </h3>
+          </div>
 
           <div className="space-y-3">
             {day.recipe_steps.map((step, idx) => {
@@ -225,12 +235,12 @@ export const VisualRecipe: React.FC<VisualRecipeProps> = ({ day, familySize }) =
               return (
                 <div
                   key={step.step_number}
-                  className={`p-4 rounded-xl border transition-all ${
+                  className={`p-4 rounded-2xl border-2 transition-all ${
                     isChecked
-                      ? 'bg-slate-50/70 border-slate-200 opacity-60'
+                      ? 'bg-cream-soft/60 border-forest/15 opacity-60'
                       : isTimerActive && isTimerRunning
-                      ? 'bg-amber-50/70 border-amber-400 shadow-md ring-1 ring-amber-400'
-                      : 'bg-white border-slate-200 hover:border-slate-300'
+                      ? 'bg-white border-coral ring-4 ring-coral/25 shadow-solid-sm'
+                      : 'bg-white border-forest/20 hover:border-forest/50'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-3">
@@ -239,54 +249,54 @@ export const VisualRecipe: React.FC<VisualRecipeProps> = ({ day, familySize }) =
                       <button
                         type="button"
                         onClick={() => toggleStepCompleted(step.step_number)}
-                        className={`mt-0.5 w-6 h-6 rounded-lg flex items-center justify-center border transition-all ${
+                        className={`mt-0.5 w-6 h-6 rounded-full flex items-center justify-center border-2 transition-all ${
                           isChecked
-                            ? 'bg-brand-600 border-brand-600 text-white'
-                            : 'bg-white border-slate-300 hover:border-brand-500 text-transparent'
+                            ? 'bg-forest border-forest text-lime'
+                            : 'bg-white border-forest/40 hover:border-forest text-transparent'
                         }`}
                       >
-                        <Check className="w-4 h-4 stroke-[3]" />
+                        <Check className="w-3.5 h-3.5 stroke-[3]" />
                       </button>
 
                       {/* Step details */}
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="text-xs font-black text-brand-700 bg-brand-50 px-2 py-0.5 rounded border border-brand-200">
+                          <span className="text-[11px] font-black text-lime bg-forest px-2 py-0.5 rounded-full border border-forest">
                             STEP {step.step_number}
                           </span>
                           {step.highlight_action && (
-                            <span className="text-xs font-bold text-slate-700">
+                            <span className="text-xs font-black text-coral">
                               [{step.highlight_action}]
                             </span>
                           )}
                         </div>
-                        <p className={`text-sm text-slate-800 leading-relaxed ${isChecked ? 'line-through text-slate-400' : ''}`}>
+                        <p className={`text-xs sm:text-sm text-forest leading-relaxed font-medium ${isChecked ? 'line-through text-sage' : ''}`}>
                           {step.action}
                         </p>
                       </div>
                     </div>
 
-                    {/* In-app Timer Widget */}
+                    {/* Timer Widget */}
                     {hasTimer && (
-                      <div className="flex flex-col items-end gap-1.5 shrink-0 pl-2">
+                      <div className="flex flex-col items-end gap-1 shrink-0 pl-2">
                         <button
                           type="button"
                           onClick={() => startStepTimer(idx, step.timer_seconds)}
-                          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all shadow-xs ${
+                          className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-black transition-all border-2 border-forest shadow-solid-sm active:translate-y-0.5 ${
                             isTimerActive && isTimerRunning
-                              ? 'bg-amber-500 text-white animate-pulse'
-                              : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200'
+                              ? 'bg-coral text-white animate-pulse'
+                              : 'bg-lime hover:bg-lime-hover text-forest'
                           }`}
                         >
                           {isTimerActive && isTimerRunning ? (
                             <>
                               <Pause className="w-3.5 h-3.5" />
-                              <span>{formatTimer(secondsLeft)}</span>
+                              <span className="font-mono">{formatTimer(secondsLeft)}</span>
                             </>
                           ) : (
                             <>
-                              <Play className="w-3.5 h-3.5 text-brand-600" />
-                              <span>{isTimerActive ? formatTimer(secondsLeft) : `${Math.floor(step.timer_seconds / 60)}분`}</span>
+                              <Play className="w-3.5 h-3.5 text-forest" />
+                              <span className="font-mono">{isTimerActive ? formatTimer(secondsLeft) : `${Math.floor(step.timer_seconds / 60)}분`}</span>
                             </>
                           )}
                         </button>
@@ -295,7 +305,7 @@ export const VisualRecipe: React.FC<VisualRecipeProps> = ({ day, familySize }) =
                           <button
                             type="button"
                             onClick={() => resetTimer(step.timer_seconds)}
-                            className="text-[10px] text-slate-400 hover:text-slate-600 flex items-center gap-0.5"
+                            className="text-[10px] text-sage hover:text-forest flex items-center gap-0.5 font-bold"
                           >
                             <RotateCcw className="w-2.5 h-2.5" /> 리셋
                           </button>
@@ -311,14 +321,14 @@ export const VisualRecipe: React.FC<VisualRecipeProps> = ({ day, familySize }) =
 
         {/* Alternative Seasoning & Cooking Tips */}
         {day.alternative_sauces && day.alternative_sauces.length > 0 && (
-          <div className="p-4 rounded-xl bg-amber-50/80 border border-amber-200 text-xs text-amber-900">
-            <h4 className="font-bold flex items-center gap-1.5 mb-2 text-amber-800">
-              <AlertCircle className="w-4 h-4 text-amber-600" />
+          <div className="p-4 rounded-2xl border-2 border-forest/20 bg-cream-soft text-xs text-forest">
+            <h4 className="font-black flex items-center gap-1.5 mb-2 text-forest text-sm">
+              <AlertCircle className="w-4 h-4 text-coral" />
               스마트 대체 양념 & 조리 꿀팁
             </h4>
-            <ul className="space-y-1 pl-5 list-disc text-amber-800/90">
+            <ul className="space-y-1 pl-5 list-disc text-sage font-medium">
               {day.alternative_sauces.map((tip, idx) => (
-                <li key={idx}>{tip}</li>
+                <li key={idx} className="leading-relaxed">{tip}</li>
               ))}
             </ul>
           </div>

@@ -7,31 +7,54 @@ export default {
   theme: {
     extend: {
       colors: {
-        brand: {
-          50: '#f0fdf4',
-          100: '#dcfce7',
-          200: '#bbf7d0',
-          300: '#86efac',
-          400: '#4ade80',
-          500: '#22c55e',
-          600: '#16a34a',
-          700: '#15803d',
-          800: '#166534',
-          900: '#14532d',
+        // Pinterest Fresh Food / Personalized Meals Palette
+        cream: {
+          DEFAULT: "#fbf8ee", // Warm buttermilk cream ground
+          paper: "#ffffff",
+          soft: "#f4f0de",
+          muted: "#ece5cf",
+          border: "#e2dac2",
         },
-        warm: {
-          50: '#fffbeb',
-          100: '#fef3c7',
-          200: '#fde68a',
-          300: '#fcd34d',
-          400: '#fbbf24',
-          500: '#f59e0b',
-          600: '#d97706',
-        }
+        forest: {
+          DEFAULT: "#0c3b28", // Signature deep pine green
+          dark: "#072619",
+          deep: "#0f4430",
+          light: "#175b42",
+          surface: "#092e1f",
+          subtle: "#e7f3ee",
+        },
+        lime: {
+          DEFAULT: "#d6fa3b", // Electric chartreuse/lime
+          hover: "#c3e824",
+          dark: "#9fc513",
+          light: "#ecfc85",
+          soft: "#f6fed7",
+        },
+        coral: {
+          DEFAULT: "#ff5733", // Tangerine / coral script accent
+          hover: "#e44320",
+          soft: "#fff0eb",
+        },
+        sage: {
+          DEFAULT: "#4a6356",
+          light: "#7b998a",
+          muted: "#8c9f95",
+        },
+      },
+      borderRadius: {
+        '4xl': '2rem',
+        '5xl': '2.5rem',
       },
       fontFamily: {
         sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        script: ['Caveat', 'Nanum Pen Script', 'cursive', 'sans-serif'],
       },
+      boxShadow: {
+        'solid-sm': '2px 2px 0px #0c3b28',
+        'solid': '3px 3px 0px #0c3b28',
+        'solid-lg': '5px 5px 0px #0c3b28',
+        'solid-lime': '3px 3px 0px #d6fa3b',
+      }
     },
   },
   plugins: [],
