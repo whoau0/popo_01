@@ -89,18 +89,20 @@ export async function generateMealCartPlan(input: UserInputState): Promise<MealC
 - 간장, 고추장, 된장, 쌈장, 고춧가루, 다진마늘, 설탕, 올리고당, 소금, 후추, 참기름, 들기름, 식용유, 맛술, 굴소스, 식초 등 한국 가정의 기본 조미료와 소스류는 냉장고와 양념장에 이미 100% 구비되어 있다고 전제하세요.
 - 따라서 양념이 없다는 이유로 단순 '볶음밥'이나 '야채볶음' 위주로 식단을 좁히지 마세요!
 
-[핵심 요구사항 - 메뉴 다양성 및 풍성한 일품 요리 보장]
+[핵심 요구사항 - 맛 검증 황금비율 양념장 & 초보자도 완벽히 따라하는 상세 레시피]
 1. 단순 볶음밥, 비빔밥, 덮밥류는 주간 7일 중 최대 1회로 제한하고, 정통 및 퓨전 한국 가정식의 '풍성한 일품 메인 요리'를 요일별로 다채롭게 기획하세요.
-2. 조리 방식(찌개/국/탕, 조림, 찜, 구이, 볶음/두루치기, 전/부침 등)이 요일마다 겹치지 않고 다양하게 순환되도록 영양과 식탁의 풍성함을 보장하세요.
-3. 식재료별 다채로운 메인 요리 예시:
-   * 돼지고기: 매콤 불맛 제육볶음, 촉촉하고 부드러운 수육(보쌈) & 쌈채소, 묵은지 돼지고기 김치찜, 달콤 짭조름한 간장 돼지불고기, 감자 돼지고기 고추장 짜글이, 등갈비/돼지갈비조림 등
-   * 소고기: 차돌박이 애호박 된장찌개, 궁중 소불고기 버섯전골, 소고기 뭇국, 찹스테이크, 밀푀유나베 등
-   * 닭고기: 매콤 칼칼한 닭볶음탕, 안동식 간장 찜닭 & 당면, 춘천식 매콤 닭갈비 등
-   * 해물/생선: 해물 순두부찌개, 매콤 오징어볶음, 고등어 무조림 등
-   * 채소/두부: 감자채전, 매콤 감자조림, 두부 두루치기, 애호박 새우젓 찌개 등
-4. [현재 냉장고 보유 재료]를 최우선으로 적극 활용하되, 묶음 단위 구매 재료는 주간 2~3회 나누어 써서 폐기율 0%를 달성하세요.
-5. smart_cart: 기본 소스류(간장, 소금, 설탕, 참기름 등)는 이미 집에 있으므로 절대 카트에 넣지 말고, 순수 구매가 필요한 신선 정육/수산, 채소, 메인 부재료만 카테고리별로 정제하세요.
-6. storage_guides: 쓰고 남을 식재료의 구체적 보관법을 제시하세요.
+2. [맛 검증 황금비율 양념장 (golden_ratio_sauce)]:
+   - 모든 요리마다 백종원, 류수영, 알토란 등 한국 최고 요리 연구가들이 검증한 정확한 계량 스푼 단위(T/t, 큰술, 작은술, ml, g)의 황금비율 배합표를 반드시 작성하세요.
+   - 고추장, 간장, 고춧가루, 설탕, 다진마늘, 맛술, 참기름, 굴소스 등의 구체적 계량과 '배합 및 숙성 비법(mixing_tip)', '맛의 킥/비법 한 끗(taste_kick)'을 반드시 포함하세요.
+3. [실패 없는 정밀 단계별 레시피 (recipe_steps)]:
+   - 절대 3~4단계로 간략히 줄이지 말고, 요리 초보자도 100% 식당 맛을 낼 수 있도록 최소 5~7단계 이상의 상세한 조리 과정을 작성하세요.
+   - 각 단계마다 불 조절(heat_level: '강불' | '중불' | '약불' | '잔열/뜸')을 명시하세요.
+   - 시각적 완료 기준(예: "대파가 갈색빛이 돌며 향이 날 때까지", "고기 핏기가 가시고 겉면이 노릇해질 때까지")을 action에 상세히 서술하세요.
+   - 각 단계마다 요리의 실패를 막는 셰프의 비법(tip)을 구체적으로 기재하세요.
+4. 조리 방식(찌개/국/탕, 조림, 찜, 구이, 볶음/두루치기, 전/부침 등)이 요일마다 겹치지 않고 다양하게 순환되도록 영양과 식탁의 풍성함을 보장하세요.
+5. [현재 냉장고 보유 재료]를 최우선으로 적극 활용하되, 묶음 단위 구매 재료는 주간 2~3회 나누어 써서 폐기율 0%를 달성하세요.
+6. smart_cart: 기본 소스류(간장, 소금, 설탕, 참기름 등)는 이미 집에 있으므로 절대 카트에 넣지 말고, 순수 구매가 필요한 신선 정육/수산, 채소, 메인 부재료만 카테고리별로 정제하세요.
+7. storage_guides: 쓰고 남을 식재료의 구체적 보관법을 제시하세요.
 
 반드시 마크다운 코드블록이나 잡담 없이 순수 JSON 포맷으로만 응답하세요:
 {
@@ -112,17 +114,31 @@ export async function generateMealCartPlan(input: UserInputState): Promise<MealC
       "is_dining_out": false,
       "menu_name": "string (요리명)",
       "category": "string (예: 국/찌개, 볶음, 찜/조림, 일품요리 등)",
-      "cooking_time": "15분",
+      "cooking_time": "18분",
       "image_url": "",
       "used_pantry_items": ["string (활용한 보유재료)"],
       "used_shopping_items": ["string (추가 필요 재료)"],
       "calories_per_serving": 450,
+      "golden_ratio_sauce": {
+        "sauce_name": "string (예: 백종원식 불맛 제육 황금 양념장 배합표)",
+        "ingredients": [
+          { "name": "진간장", "amount": "2큰술 (30ml)" },
+          { "name": "고춧가루", "amount": "2큰술 (20g)" },
+          { "name": "고추장", "amount": "2큰술 (35g)" },
+          { "name": "황설탕", "amount": "1.5큰술 (18g)" },
+          { "name": "다진 마늘", "amount": "1.5큰술 (20g)" }
+        ],
+        "mixing_tip": "string (배합 및 숙성 비법)",
+        "taste_kick": "string (맛의 킥/비법 한 끗)"
+      },
       "alternative_sauces": ["string (대체 양념 팁)"],
       "recipe_steps": [
         {
           "step_number": 1,
           "highlight_action": "string (핵심 행동 키워드)",
-          "action": "string (간결하고 명확한 조리 지침)",
+          "heat_level": "강불 | 중불 | 약불 | 잔열/뜸",
+          "action": "string (정밀하고 상세한 조리 지침)",
+          "tip": "string (실패 방지 팁)",
           "timer_seconds": 120
         }
       ]
@@ -284,6 +300,7 @@ export function generateSmartDynamicPlan(input: UserInputState): MealCartData {
     let calories = 430;
     let steps: any[] = [];
     let tips: string[] = [];
+    let goldenSauce: any = undefined;
 
     const primaryPantry = pantryList[idx % Math.max(1, pantryList.length)] || '계란 2알';
     const secondaryPantry = pantryList[(idx + 1) % Math.max(1, pantryList.length)] || '대파';
@@ -298,25 +315,39 @@ export function generateSmartDynamicPlan(input: UserInputState): MealCartData {
     const isPork = allPantryText.includes('돼지') || allPantryText.includes('삼겹') || allPantryText.includes('목살') || allPantryText.includes('제육') || allPantryText.includes('앞다리') || allPantryText.includes('대패');
     const isBeef = allPantryText.includes('소고기') || allPantryText.includes('차돌') || allPantryText.includes('불고기') || allPantryText.includes('우삼겹') || allPantryText.includes('한우');
     const isChicken = allPantryText.includes('닭') || allPantryText.includes('치킨');
-    const isPotato = allPantryText.includes('감자');
-    const isTofu = allPantryText.includes('두부') || allPantryText.includes('순두부');
-    const isCurry = allPantryText.includes('카레');
 
-    // Rich main dish recipes tailored to ingredients without falling back to plain fried rice
+    // Rich main dish recipes tailored to ingredients with verified golden sauces & detailed steps
     if (isPork) {
       const porkDishes = [
         {
           name: '매콤 불맛 파기름 제육볶음 & 모둠 쌈채소',
           category: '볶음/일품 요리',
-          time: '18분',
+          time: '20분',
           cal: 520,
           shop: ['모둠 쌈채소 1팩'],
+          sauce: {
+            sauce_name: '류수영·백종원식 불맛 제육 황금 양념장',
+            ingredients: [
+              { name: '고추장', amount: '2큰술 (35g)' },
+              { name: '진간장', amount: '2큰술 (30ml)' },
+              { name: '고춧가루', amount: '2큰술 (20g)' },
+              { name: '황설탕', amount: '1.5큰술 (18g)' },
+              { name: '다진 마늘', amount: '1.5큰술 (20g)' },
+              { name: '맛술', amount: '2큰술 (30ml)' },
+              { name: '올리고당', amount: '1큰술 (15g)' },
+              { name: '참기름 & 후추', amount: '참기름 1T, 후추 3톡' },
+            ],
+            mixing_tip: '양념을 볼에 미리 섞어 설탕을 녹인 뒤 10분간 숙성하면 고춧가루가 불어 색감이 곱고 고기에 착 밀착됩니다.',
+            taste_kick: '맛의 킥: 고기를 볶기 전 설탕 1큰술을 고기에 먼저 버무려두면 연육 작용으로 고기가 훨씬 부드러워집니다.',
+          },
           steps: [
-            { step_number: 1, highlight_action: '고기 양념', action: '돼지고기에 고추장 2T, 진간장 1.5T, 고춧가루 1T, 다진마늘 1T, 설탕 1T를 넣고 조물조물 재웁니다.', timer_seconds: 300 },
-            { step_number: 2, highlight_action: '파기름 내기', action: '팬에 식용유를 두르고 송송 썬 대파를 중약불에서 2분간 볶아 향긋한 파기름을 만듭니다.', timer_seconds: 120 },
-            { step_number: 3, highlight_action: '센불 볶기', action: '양념한 고기를 넣고 센 불에서 5분간 빠르게 볶아 불맛을 입혀 완성합니다.', timer_seconds: 300 },
+            { step_number: 1, highlight_action: '설탕 연육 재우기', heat_level: '잔열/뜸', action: '돼지고기를 한입 크기로 썰어 키친타월로 핏물을 닦고 설탕 1큰술과 맛술 1큰술을 버무려 5분간 둡니다.', tip: '설탕이 먼저 침투해야 단맛이 겉돌지 않고 육질이 부드러워집니다.', timer_seconds: 300 },
+            { step_number: 2, highlight_action: '황금 양념 버무리기', heat_level: '잔열/뜸', action: '준비된 황금 양념장을 고기에 붓고 손으로 조물조물 주물러 5분간 간이 배게 합니다.', tip: '손끝으로 꾹꾹 눌러 치대주면 고기 속까지 양념이 스며듭니다.', timer_seconds: 300 },
+            { step_number: 3, highlight_action: '파기름 내기', heat_level: '중불', action: '팬에 식용유 2큰술을 두르고 송송 썬 대파를 넣어 중불에서 2분간 노릇해질 때까지 파기름을 냅니다.', tip: '차가운 기름과 파를 함께 넣고 가열해야 파향이 풍부하게 우러납니다.', timer_seconds: 120 },
+            { step_number: 4, highlight_action: '센불 불맛 볶기', heat_level: '강불', action: '불을 센 불로 올리고 양념 고기를 펼쳐 올립니다. 1분간 지진 뒤 빠르게 4분간 뒤집어가며 볶습니다.', tip: '센 불을 유지해야 물이 흥건해지지 않고 불맛이 살아납니다.', timer_seconds: 300 },
+            { step_number: 5, highlight_action: '양파 투하 & 마무리', heat_level: '강불', action: '채 썬 양파를 넣고 2분간 아삭하게 볶은 뒤 불을 끄고 참기름과 통깨를 둘러 쌈채소와 곁들입니다.', tip: '참기름은 불을 끈 뒤 넣어야 고소한 향미가 보존됩니다.', timer_seconds: 120 },
           ],
-          tips: ['불 끄기 직전 참기름 1T와 통깨를 뿌리면 고소함 극대화', '쌈채소와 마늘 쌈장을 곁들이세요.'],
+          tips: ['불을 끄고 잔열에서 참기름을 둘러주세요.', '쌈채소에 편마늘과 쌈장을 곁들이면 최고입니다.'],
         },
         {
           name: '부드럽고 촉촉한 수육(보쌈) & 마늘 쌈장',
@@ -324,12 +355,26 @@ export function generateSmartDynamicPlan(input: UserInputState): MealCartData {
           time: '30분',
           cal: 560,
           shop: ['통마늘 1봉', '알배기 배추 1통'],
+          sauce: {
+            sauce_name: '잡내 제로 한방 된장 수육 육수 & 마늘 쌈장',
+            ingredients: [
+              { name: '재래식 된장', amount: '2큰술 (30g)' },
+              { name: '맛술 또는 소주', amount: '3큰술 (45ml)' },
+              { name: '통마늘', amount: '8~10알' },
+              { name: '커피가루 (잡내 비법)', amount: '0.5작은술' },
+              { name: '통후추', amount: '10알' },
+              { name: '마늘 쌈장', amount: '쌈장 3T, 다진마늘 1T, 참기름 1T' },
+            ],
+            mixing_tip: '수육 삶는 물에 된장과 함께 커피가루 반 작은술을 넣으면 돼지고기 특유의 누린내가 100% 잡히고 먹음직스러운 갈색빛이 돕니다.',
+            taste_kick: '맛의 킥: 다 삶은 고기를 건져 바로 썰지 말고 랩이나 뚜껑을 덮어 5분간 레스팅하면 육즙이 고기 전체로 퍼져 촉촉함이 유지됩니다.',
+          },
           steps: [
-            { step_number: 1, highlight_action: '고기 삶기', action: '냄비에 물 1L, 된장 1.5T, 대파 1대, 통마늘, 맛술 2T를 넣고 끓어오르면 돼지고기를 넣습니다.', timer_seconds: 180 },
-            { step_number: 2, highlight_action: '중약불 뜸들이기', action: '뚜껑을 덮고 중약불에서 25분간 속까지 부드럽게 푹 삶아냅니다.', timer_seconds: 1500 },
-            { step_number: 3, highlight_action: '썰어 담기', action: '고기를 꺼내 한 김 식힌 뒤 0.8cm 두께로 정갈하게 썰어 알배기 배추와 냅니다.', timer_seconds: 0 },
+            { step_number: 1, highlight_action: '수육 육수 끓이기', heat_level: '강불', action: '냄비에 물 1.2L와 된장 2T, 맛술 3T, 대파 1대, 통마늘 8알, 커피가루 0.5t를 넣고 센 불로 팔팔 끓입니다.', tip: '육수가 끓어오를 때 고기를 넣어야 겉면 단백질이 응고되어 육즙이 빠져나가지 않습니다.', timer_seconds: 240 },
+            { step_number: 2, highlight_action: '고기 투하 & 삶기', heat_level: '중불', action: '육수가 끓으면 돼지고기 덩어리를 넣고 뚜껑을 덮어 중약불에서 25분간 뭉근하게 삶습니다.', tip: '젓가락으로 가장 두꺼운 부분을 찔렀을 때 핏물이 나오지 않고 맑은 물이 나오면 다 익은 것입니다.', timer_seconds: 1500 },
+            { step_number: 3, highlight_action: '육즙 가두는 레스팅', heat_level: '잔열/뜸', action: '다 익은 고기를 꺼내 도마 위에 올리고 5분간 한 김 식히며 육즙을 안정화시킵니다.', tip: '뜨거울 때 바로 썰면 살이 부서지고 육즙이 다 흘러나오므로 잠시 기다립니다.', timer_seconds: 300 },
+            { step_number: 4, highlight_action: '먹기 좋게 썰기', heat_level: '잔열/뜸', action: '칼을 비스듬히 눕혀 0.8cm 두께로 정갈하게 썰어 알배기 배추, 마늘 쌈장과 함께 담아냅니다.', tip: '결 반대 방향으로 썰어야 씹는 식감이 연하고 부드럽습니다.', timer_seconds: 0 },
           ],
-          tips: ['된장과 커피가루 약간을 넣으면 잡내가 완벽히 제거됩니다.', '새우젓에 참기름을 섞어 곁들이면 최고!'],
+          tips: ['새우젓 1T에 참기름과 고춧가루를 섞은 새우젓 양념장을 곁들이세요.'],
         },
         {
           name: '깊은 감칠맛 묵은지 돼지고기 김치찜',
@@ -337,51 +382,26 @@ export function generateSmartDynamicPlan(input: UserInputState): MealCartData {
           time: '25분',
           cal: 480,
           shop: ['두부 1모'],
+          sauce: {
+            sauce_name: '묵은지 신맛 중화 깊은맛 김치찜 양념',
+            ingredients: [
+              { name: '고춧가루', amount: '2큰술 (20g)' },
+              { name: '국간장', amount: '1큰술 (15ml)' },
+              { name: '황설탕 (신맛 중화)', amount: '1큰술 (12g)' },
+              { name: '다진 마늘', amount: '1.5큰술 (20g)' },
+              { name: '맛술', amount: '1큰술 (15ml)' },
+              { name: '들기름 (풍미)', amount: '1.5큰술 (20ml)' },
+            ],
+            mixing_tip: '김치찜의 핵심은 설탕 1큰술과 들기름입니다. 묵은지의 아린 신맛을 설탕이 부드럽게 감싸고 들기름이 김치를 야들야들하게 만들어줍니다.',
+            taste_kick: '맛의 킥: 쌀뜨물 500ml를 붓고 뚜껑을 덮어 끓이다가 마지막 5분간 두부를 얹어 조리면 두부에 깊은 김치 육수가 쏙 배어듭니다.',
+          },
           steps: [
-            { step_number: 1, highlight_action: '냄비 세팅', action: '냄비 바닥에 돼지고기를 깔고 잘 익은 김치 반 포기로 고기를 감싸듯 얹습니다.', timer_seconds: 0 },
-            { step_number: 2, highlight_action: '양념 육수 붓기', action: '물 500ml, 고춧가루 1T, 다진마늘 1T, 설탕 0.5T, 간장 1T를 섞은 육수를 붓습니다.', timer_seconds: 120 },
-            { step_number: 3, highlight_action: '자작하게 졸이기', action: '뚜껑을 닫고 중약불에서 20분간 김치가 나른해질 때까지 푹 조려 완성합니다.', timer_seconds: 1200 },
+            { step_number: 1, highlight_action: '냄비 바닥 세팅', heat_level: '잔열/뜸', action: '냄비 바닥에 들기름 1큰술을 두르고 큼직하게 썬 돼지고기를 깐 뒤 묵은지 반 포기로 고기를 포근히 감싸듯 올립니다.', tip: '고기가 바닥에 닿아야 타지 않고 김치 이불을 덮어 육즙이 위아래로 순환합니다.', timer_seconds: 0 },
+            { step_number: 2, highlight_action: '양념 육수 붓기', heat_level: '강불', action: '쌀뜨물 500ml에 고춧가루 2T, 국간장 1T, 설탕 1T, 다진마늘 1.5T를 섞은 양념 육수를 붓고 센 불로 끓입니다.', tip: '김칫국물 3큰술을 함께 넣어주면 따로 육수를 내지 않아도 감칠맛이 진해집니다.', timer_seconds: 180 },
+            { step_number: 3, highlight_action: '약불 뭉근히 찜하기', heat_level: '중약불', action: '끓어오르면 뚜껑을 덮고 중약불로 줄여 18분간 김치가 나른하고 투명해질 때까지 푹 조립니다.', tip: '중간에 뚜껑을 자주 열지 않아야 찜기 내부의 증기가 고기를 부드럽게 익혀줍니다.', timer_seconds: 1080 },
+            { step_number: 4, highlight_action: '두부 투하 & 완성', heat_level: '약불', action: '두부를 도톰하게 썰어 냄비 가장자리에 둘러 넣고 국물을 끼얹어가며 4분간 더 졸여 완성합니다.', tip: '길게 찢은 묵은지에 두부와 고기를 싸서 드시면 밥도둑입니다.', timer_seconds: 240 },
           ],
-          tips: ['설탕 0.5T가 묵은지의 신맛을 부드럽게 잡아줍니다.', '남은 국물에 밥을 비벼 먹으면 밥도둑!'],
-        },
-        {
-          name: '달콤 짭조름한 간장 돼지불고기 & 아삭 파채',
-          category: '구이/조림 요리',
-          time: '15분',
-          cal: 490,
-          shop: ['양파 1개', '모둠 버섯 1팩'],
-          steps: [
-            { step_number: 1, highlight_action: '간장 양념 버무리기', action: '진간장 3T, 설탕 1.5T, 맛술 1T, 다진마늘 1T, 후추를 섞어 돼지고기를 버무립니다.', timer_seconds: 180 },
-            { step_number: 2, highlight_action: '센불에 굽기', action: '달군 팬에 양념 고기와 양파를 넣고 센 불에서 수분이 날아가도록 4분간 볶습니다.', timer_seconds: 240 },
-            { step_number: 3, highlight_action: '파채 올리기', action: '고기가 노릇하게 익으면 불을 끄고 신선한 대파채를 얹어 잔열로 버무립니다.', timer_seconds: 60 },
-          ],
-          tips: ['올리고당 1T로 반질반질한 윤기를 더하세요.', '버섯을 함께 넣으면 식감이 풍부해집니다.'],
-        },
-        {
-          name: '얼큰 칼칼한 고추장 돼지고기 감자 짜글이',
-          category: '찌개/조림 요리',
-          time: '18분',
-          cal: 460,
-          shop: ['감자 2개'],
-          steps: [
-            { step_number: 1, highlight_action: '재료 썰기', action: '돼지고기와 감자, 양파를 큼직한 큐브 모양으로 깍둑썰기합니다.', timer_seconds: 0 },
-            { step_number: 2, highlight_action: '고기 볶기', action: '냄비에 기름을 두르고 고기와 고추장 1.5T, 된장 0.5T를 중불에 2분간 볶습니다.', timer_seconds: 120 },
-            { step_number: 3, highlight_action: '자작하게 끓이기', action: '물 400ml와 감자를 넣고 감자가 포슬하게 익을 때까지 10분간 끓여 완성합니다.', timer_seconds: 600 },
-          ],
-          tips: ['국물이 자작할 때 밥 위에 얹어 슥슥 비벼 드세요.', '청양고추 1개를 송송 썰어 넣으면 더욱 칼칼합니다.'],
-        },
-        {
-          name: '바삭 고소한 돼지고기 김치전 & 맑은 순두부탕',
-          category: '전/별미 요리',
-          time: '15분',
-          cal: 430,
-          shop: ['부침가루 1봉', '순두부 1봉'],
-          steps: [
-            { step_number: 1, highlight_action: '반죽 만들기', action: '잘게 썬 돼지고기와 신김치, 부침가루 1.5컵, 차가운 물 1컵을 섞어 반죽합니다.', timer_seconds: 120 },
-            { step_number: 2, highlight_action: '바삭하게 부치기', action: '기름을 넉넉히 두른 팬에 반죽을 얇게 펴고 중약불에서 앞뒤로 4분씩 바삭하게 부칩니다.', timer_seconds: 240 },
-            { step_number: 3, highlight_action: '순두부 곁들이기', action: '다른 냄비에 물 300ml와 순두부를 넣고 국간장으로 간하여 3분간 맑게 끓입니다.', timer_seconds: 180 },
-          ],
-          tips: ['얼음물로 반죽하면 튀김처럼 바삭한 식감이 살아납니다.', '초간장(간장 1T + 식초 0.5T)에 콕 찍어드세요.'],
+          tips: ['남은 국물에 밥과 김가루, 참기름을 넣고 볶아드세요.'],
         },
       ];
       const d = porkDishes[idx % porkDishes.length];
@@ -392,6 +412,7 @@ export function generateSmartDynamicPlan(input: UserInputState): MealCartData {
       shoppingForDay.push(...d.shop);
       steps = d.steps;
       tips = d.tips;
+      goldenSauce = d.sauce;
     } else if (isBeef) {
       const beefDishes = [
         {
@@ -400,12 +421,26 @@ export function generateSmartDynamicPlan(input: UserInputState): MealCartData {
           time: '20분',
           cal: 510,
           shop: ['모둠 버섯 1팩', '대파 1단'],
+          sauce: {
+            sauce_name: '궁중 전통 소불고기 비법 간장 소스',
+            ingredients: [
+              { name: '진간장 (양조간장)', amount: '4큰술 (60ml)' },
+              { name: '배음료(갈배) 또는 맛술', amount: '3큰술 (45ml)' },
+              { name: '황설탕', amount: '1.5큰술 (18g)' },
+              { name: '다진 마늘', amount: '1.5큰술 (20g)' },
+              { name: '참기름', amount: '1.5큰술 (20ml)' },
+              { name: '후춧가루', amount: '3톡' },
+            ],
+            mixing_tip: '배음료를 간장에 섞어 고기를 재우면 배의 천연 연육 성분이 소고기를 극도로 부드럽게 만들고 깊은 단맛을 냅니다.',
+            taste_kick: '맛의 킥: 전골 육수 400ml에 참치액 0.5큰술을 더하면 전문점 샤브샤브 전골처럼 깊은 감칠맛이 완성됩니다.',
+          },
           steps: [
-            { step_number: 1, highlight_action: '소불고기 양념', action: '소고기에 진간장 3T, 설탕 1.5T, 다진마늘 1T, 참기름 1T, 배즙(또는 맛술)을 재웁니다.', timer_seconds: 180 },
-            { step_number: 2, highlight_action: '전골 냄비 담기', action: '전골 냄비에 양념 소고기와 버섯, 양파, 대파를 둘러 담고 물 400ml를 붓습니다.', timer_seconds: 120 },
-            { step_number: 3, highlight_action: '보글보글 끓이기', action: '센 불로 끓이다가 끓어오르면 중약불에서 7분간 끓여 깊은 국물 맛을 냅니다.', timer_seconds: 420 },
+            { step_number: 1, highlight_action: '소불고기 양념 재우기', heat_level: '잔열/뜸', action: '소고기에 진간장 4T, 배음료 3T, 설탕 1.5T, 다진마늘 1.5T, 참기름 1.5T를 넣고 조물조물 버무려 10분간 재웁니다.', tip: '소고기는 핏물을 키친타월로 먼저 눌러 닦아내야 잡내가 없습니다.', timer_seconds: 600 },
+            { step_number: 2, highlight_action: '전골 냄비 버섯 세팅', heat_level: '잔열/뜸', action: '전골 냄비 가운데에 양념 소고기를 올리고 둘레에 팽이버섯, 표고버섯, 대파, 양파를 보기 좋게 둘러 담습니다.', tip: '채소를 색감별로 둘러 담으면 손님 대접용으로 손색없는 정갈한 비주얼이 됩니다.', timer_seconds: 0 },
+            { step_number: 3, highlight_action: '육수 붓고 끓이기', heat_level: '강불', action: '물 400ml에 참치액 0.5T를 섞은 육수를 냄비 가장자리에 조심스럽게 붓고 센 불로 끓입니다.', tip: '가운데 고기 위에 직접 붓지 말고 가장자리에 부어야 고기 양념이 씻겨 나가지 않습니다.', timer_seconds: 180 },
+            { step_number: 4, highlight_action: '소고기 익히기 & 완성', heat_level: '중불', action: '국물이 끓어오르면 젓가락으로 뭉친 소고기를 살살 풀어주며 중불에서 5분간 익혀냅니다.', tip: '소고기는 오래 끓이면 질겨지므로 핏기가 가시고 익자마자 건져 드시는 것이 가장 부드럽습니다.', timer_seconds: 300 },
           ],
-          tips: ['당면을 미리 불려두었다가 함께 넣으면 최고의 별미', '참소스나 와사비 간장에 찍어드세요.'],
+          tips: ['당면을 미지근한 물에 30분 불려두었다가 함께 넣으면 최고입니다.'],
         },
         {
           name: '차돌박이 애호박 된장찌개 & 계란말이',
@@ -413,38 +448,25 @@ export function generateSmartDynamicPlan(input: UserInputState): MealCartData {
           time: '15분',
           cal: 440,
           shop: ['두부 1모', '애호박 1개'],
+          sauce: {
+            sauce_name: '백종원식 차돌 된장찌개 비법 배합표',
+            ingredients: [
+              { name: '재래식 된장', amount: '2큰술 (30g)' },
+              { name: '시판 쌈장 (비법)', amount: '0.5큰술 (8g)' },
+              { name: '고춧가루', amount: '1큰술 (10g)' },
+              { name: '다진 마늘', amount: '1큰술 (15g)' },
+              { name: '국간장', amount: '0.5큰술 (7ml)' },
+            ],
+            mixing_tip: '된장과 쌈장을 4:1로 섞으면 식당 된장찌개 특유의 입에 착 감기는 감칠맛이 살아납니다.',
+            taste_kick: '맛의 킥: 쌀뜨물 500ml를 사용하고 끓을 때 설탕 1/3작은술을 넣으면 떫은맛이 사라집니다.',
+          },
           steps: [
-            { step_number: 1, highlight_action: '차돌박이 볶기', action: '냄비에 차돌박이를 넣고 중불에서 핏기가 가실 때까지 2분간 볶아 기름을 냅니다.', timer_seconds: 120 },
-            { step_number: 2, highlight_action: '된장 육수 풀기', action: '물 500ml를 붓고 재래식 된장 2T를 푼 뒤 센 불에서 팔팔 끓입니다.', timer_seconds: 180 },
-            { step_number: 3, highlight_action: '채소 넣고 끓이기', action: '애호박과 두부를 깍둑썰어 넣고 중약불에서 6분간 끓여 완성합니다.', timer_seconds: 360 },
+            { step_number: 1, highlight_action: '차돌박이 소기름 내기', heat_level: '중불', action: '달군 뚝배기에 기름 없이 차돌박이를 넣고 중불에서 2분간 볶아 고소한 소기름을 충분히 뽑아냅니다.', tip: '차돌 기름으로 채소를 볶아야 국물에 진한 풍미가 뱁니다.', timer_seconds: 120 },
+            { step_number: 2, highlight_action: '파 고추기름 내기', heat_level: '약불', action: '나온 소기름에 대파와 고춧가루 1큰술을 넣고 약불에서 1분간 살살 볶아 붉은 고추기름을 냅니다.', tip: '고춧가루가 타지 않게 약불을 유지하세요.', timer_seconds: 60 },
+            { step_number: 3, highlight_action: '쌀뜨물 & 양념 풀기', heat_level: '강불', action: '쌀뜨물 500ml를 붓고 된장 2T, 쌈장 0.5T, 다진마늘 1T를 거름망에 풀어 넣고 센 불로 끓입니다.', tip: '거름망을 쓰면 콩 찌꺼기 없이 맑고 개운합니다.', timer_seconds: 180 },
+            { step_number: 4, highlight_action: '애호박·두부 조리기', heat_level: '중불', action: '끓어오르면 썰어둔 애호박, 두부를 넣고 중불로 줄여 5분간 보글보글 끓여 완성합니다.', tip: '거품을 걷어내면 텁텁하지 않고 담백합니다.', timer_seconds: 300 },
           ],
-          tips: ['쌈장 0.5T를 섞으면 고깃집 된장찌개 맛이 납니다.', '청양고추로 칼칼함을 조절하세요.'],
-        },
-        {
-          name: '소고기 찹스테이크 & 알록달록 구운 채소',
-          category: '양식/일품 요리',
-          time: '15분',
-          cal: 530,
-          shop: ['파프리카 1개', '양파 1개'],
-          steps: [
-            { step_number: 1, highlight_action: '고기 밑간', action: '소고기를 깍둑썰기하고 소금, 후추, 올리브유를 둘러 5분간 밑간합니다.', timer_seconds: 180 },
-            { step_number: 2, highlight_action: '센불 시어링', action: '달군 팬에 버터 1조각을 녹이고 소고기를 센 불에서 3분간 노릇하게 굽습니다.', timer_seconds: 180 },
-            { step_number: 3, highlight_action: '소스 졸이기', action: '채소와 돈까스소스 2T, 굴소스 1T, 케첩 1T를 넣고 중불에서 2분간 빠르게 볶아냅니다.', timer_seconds: 120 },
-          ],
-          tips: ['고기를 너무 오래 익히지 않아야 육즙이 촉촉합니다.', '홀그레인 머스터드와 함께 드세요.'],
-        },
-        {
-          name: '맑고 깊은 소고기 뭇국 & 감자채전',
-          category: '국/찌개 요리',
-          time: '20분',
-          cal: 420,
-          shop: ['무 1/3개', '부침가루 1봉'],
-          steps: [
-            { step_number: 1, highlight_action: '참기름에 볶기', action: '냄비에 참기름 1T를 두르고 소고기와 나박썬 무를 중불에서 3분간 달달 볶습니다.', timer_seconds: 180 },
-            { step_number: 2, highlight_action: '푹 끓이기', action: '물 700ml를 붓고 끓어오르면 거품을 걷어내며 중약불에서 12분간 푹 끓입니다.', timer_seconds: 720 },
-            { step_number: 3, highlight_action: '간 맞추기', action: '국간장 1.5T와 다진마늘 0.5T, 대파를 넣고 2분간 더 끓여 마무리합니다.', timer_seconds: 120 },
-          ],
-          tips: ['소고기와 무를 충분히 볶아야 국물이 뽀얗고 깊어집니다.', '후추를 톡톡 뿌려 드세요.'],
+          tips: ['청양고추 1개를 송송 썰어 넣으면 칼칼함이 배가됩니다.'],
         },
       ];
       const d = beefDishes[idx % beefDishes.length];
@@ -455,6 +477,7 @@ export function generateSmartDynamicPlan(input: UserInputState): MealCartData {
       shoppingForDay.push(...d.shop);
       steps = d.steps;
       tips = d.tips;
+      goldenSauce = d.sauce;
     } else if (isChicken) {
       const chickenDishes = [
         {
@@ -463,38 +486,27 @@ export function generateSmartDynamicPlan(input: UserInputState): MealCartData {
           time: '25분',
           cal: 520,
           shop: ['감자 2개', '당근 1개'],
+          sauce: {
+            sauce_name: '정통 황금비율 닭볶음탕 양념장',
+            ingredients: [
+              { name: '고추장', amount: '2큰술 (35g)' },
+              { name: '고춧가루', amount: '3큰술 (30g)' },
+              { name: '진간장', amount: '4큰술 (60ml)' },
+              { name: '설탕', amount: '2큰술 (24g)' },
+              { name: '다진 마늘', amount: '2큰술 (30g)' },
+              { name: '맛술', amount: '2큰술 (30ml)' },
+              { name: '후춧가루', amount: '3톡' },
+            ],
+            mixing_tip: '닭볶음탕은 단맛(설탕)을 처음에 닭과 함께 넣어 끓여야 고기 속까지 간이 배고 닭고기 잡내가 날아갑니다.',
+            taste_kick: '맛의 킥: 감자를 큼직하게 썰어 국물과 함께 으깨어 밥에 비벼 먹는 것이 최고의 포인트입니다.',
+          },
           steps: [
-            { step_number: 1, highlight_action: '닭 데치기', action: '끓는 물에 닭고기를 2분간 가볍게 데쳐 불순물을 씻어냅니다.', timer_seconds: 120 },
-            { step_number: 2, highlight_action: '양념장 붓기', action: '고추장 2T, 고춧가루 2T, 진간장 3T, 설탕 1.5T, 마늘 1.5T와 물 500ml를 붓습니다.', timer_seconds: 120 },
-            { step_number: 3, highlight_action: '푹 조리기', action: '감자와 당근을 넣고 뚜껑을 덮어 중약불에서 18분간 국물이 걸쭉해지도록 조립니다.', timer_seconds: 1080 },
+            { step_number: 1, highlight_action: '닭고기 데치기', heat_level: '강불', action: '끓는 물에 닭고기를 2분간 가볍게 데쳐 불순물과 핏물을 찬물에 깨끗이 씻어냅니다.', tip: '데쳐내야 닭 잡내와 기름기가 말끔히 제거됩니다.', timer_seconds: 120 },
+            { step_number: 2, highlight_action: '설탕 먼저 끓이기', heat_level: '강불', action: '냄비에 손질된 닭과 물 500ml, 설탕 2큰술을 넣고 센 불에서 끓어오를 때까지 3분간 먼저 끓입니다.', tip: '설탕 분자가 먼저 닭고기 살을 연하게 해줍니다.', timer_seconds: 180 },
+            { step_number: 3, highlight_action: '황금 양념장 & 감자 투하', heat_level: '강불', action: '준비된 양념장(고추장, 고춧가루, 간장, 마늘, 맛술)과 큼직하게 썬 감자, 당근을 넣고 센 불로 끓입니다.', tip: '감자를 너무 작게 썰면 국물이 탁해지니 큼직하게 썰어주세요.', timer_seconds: 180 },
+            { step_number: 4, highlight_action: '중약불 푹 조리기', heat_level: '중약불', action: '뚜껑을 비스듬히 덮고 중약불에서 15분간 국물이 걸쭉하고 진해질 때까지 푹 조려 완성합니다.', tip: '바닥이 눋지 않도록 중간에 주걱으로 바닥을 한두 번 긁어줍니다.', timer_seconds: 900 },
           ],
-          tips: ['설탕을 양념 초반에 넣어야 단맛이 고기에 쏙 뱁니다.', '남은 국물에 볶음밥은 필수!'],
-        },
-        {
-          name: '달콤 짭조름한 안동식 간장 찜닭 & 당면',
-          category: '조림/일품 요리',
-          time: '22분',
-          cal: 510,
-          shop: ['납작당면 1봉', '양파 1개'],
-          steps: [
-            { step_number: 1, highlight_action: '간장 소스 만들기', action: '진간장 4T, 굴소스 1T, 올리고당 2T, 다진마늘 1T, 맛술 2T를 섞어 소스를 준비합니다.', timer_seconds: 120 },
-            { step_number: 2, highlight_action: '닭고기 조리기', action: '냄비에 닭과 물 400ml, 소스를 붓고 센 불에서 끓이다 중불로 12분간 조립니다.', timer_seconds: 720 },
-            { step_number: 3, highlight_action: '당면 넣기', action: '불려둔 당면과 채소를 넣고 국물이 자작해질 때까지 5분간 더 끓여 완성합니다.', timer_seconds: 300 },
-          ],
-          tips: ['건고추(베트남고추) 2개를 넣으면 칼칼한 전문점 맛 완성', '당면은 미지근한 물에 30분 불려두세요.'],
-        },
-        {
-          name: '춘천식 매콤 닭갈비 & 향긋한 깻잎 쌈',
-          category: '볶음 요리',
-          time: '18분',
-          cal: 480,
-          shop: ['양배추 1/4통', '깻잎 2묶음'],
-          steps: [
-            { step_number: 1, highlight_action: '닭고기 양념', action: '닭고기를 한 입 크기로 썰고 고추장 2T, 간장 1.5T, 고춧가루 1.5T, 설탕 1T에 재웁니다.', timer_seconds: 180 },
-            { step_number: 2, highlight_action: '팬에 볶기', action: '팬에 기름을 두르고 양념 닭과 양배추, 고구마를 넣어 중불에서 7분간 볶습니다.', timer_seconds: 420 },
-            { step_number: 3, highlight_action: '깻잎 얹기', action: '불을 끄고 깻잎을 큼직하게 찢어 넣고 참기름을 둘러 향을 입힙니다.', timer_seconds: 60 },
-          ],
-          tips: ['카레가루 0.5T를 양념에 섞으면 풍미가 확 살아납니다.', '피자치즈를 솔솔 뿌려도 좋습니다.'],
+          tips: ['남은 국물에 김가루와 참기름을 넣고 볶음밥을 만들어 드세요.'],
         },
       ];
       const d = chickenDishes[idx % chickenDishes.length];
@@ -505,6 +517,7 @@ export function generateSmartDynamicPlan(input: UserInputState): MealCartData {
       shoppingForDay.push(...d.shop);
       steps = d.steps;
       tips = d.tips;
+      goldenSauce = d.sauce;
     } else {
       // General rich home-cooked meal spectrum (stews, roasts, pancakes, curries)
       const generalDishes = [
@@ -514,25 +527,23 @@ export function generateSmartDynamicPlan(input: UserInputState): MealCartData {
           time: '15분',
           cal: 430,
           shop: ['차돌박이 200g', '애호박 1개'],
+          sauce: {
+            sauce_name: '백종원식 차돌 된장찌개 비법 배합표',
+            ingredients: [
+              { name: '재래식 된장', amount: '2큰술 (30g)' },
+              { name: '시판 쌈장 (감칠맛)', amount: '0.5큰술 (8g)' },
+              { name: '고춧가루', amount: '1큰술 (10g)' },
+              { name: '다진 마늘', amount: '1큰술 (15g)' },
+            ],
+            mixing_tip: '된장과 쌈장을 섞어 고춧가루와 함께 개어두면 텁텁하지 않고 시원합니다.',
+            taste_kick: '맛의 킥: 쌀뜨물 500ml를 사용하면 국물이 뽀얗고 구수해집니다.',
+          },
           steps: [
-            { step_number: 1, highlight_action: '재료 손질', action: '애호박과 두부를 1.5cm 큐브로 깍둑썰기하고 대파를 송송 썹니다.', timer_seconds: 0 },
-            { step_number: 2, highlight_action: '육수 끓이기', action: '물 500ml에 된장 2T를 풀고 차돌박이를 넣어 센 불로 끓입니다.', timer_seconds: 180 },
-            { step_number: 3, highlight_action: '채소 넣고 완성', action: '애호박, 두부, 대파를 넣고 중약불에서 7분간 보글보글 끓여냅니다.', timer_seconds: 420 },
+            { step_number: 1, highlight_action: '차돌박이 볶기', heat_level: '중불', action: '뚝배기에 차돌박이를 넣고 중불에서 2분간 볶아 기름을 냅니다.', tip: '차돌 기름에 고춧가루를 볶아 고추기름을 내면 훨씬 맛있습니다.', timer_seconds: 120 },
+            { step_number: 2, highlight_action: '된장 육수 풀기', heat_level: '강불', action: '쌀뜨물 500ml에 된장과 쌈장, 마늘을 풀고 센 불로 끓입니다.', tip: '된장 찌꺼기를 걸러내면 국물이 깔끔합니다.', timer_seconds: 180 },
+            { step_number: 3, highlight_action: '채소 넣고 끓이기', heat_level: '중불', action: '애호박과 두부를 깍둑썰어 넣고 중불에서 6분간 보글보글 끓여냅니다.', tip: '포슬포슬한 계란말이와 곁들여 풍성하게 상을 차립니다.', timer_seconds: 360 },
           ],
           tips: ['쌈장 0.5T를 더하면 고깃집 된장찌개 맛이 납니다.'],
-        },
-        {
-          name: '바삭 고소한 감자채전 & 맑은 순두부 계란국',
-          category: '별미/전 요리',
-          time: '15분',
-          cal: 410,
-          shop: ['부침가루 1봉', '순두부 1봉'],
-          steps: [
-            { step_number: 1, highlight_action: '감자 채썰기', action: '감자를 가늘게 채썰어 전분기를 가볍게 털고 소금 한 꼬집으로 밑간합니다.', timer_seconds: 0 },
-            { step_number: 2, highlight_action: '노릇하게 굽기', action: '팬에 식용유를 넉넉히 두르고 감자채를 넓게 펴서 중불로 4분간 바삭하게 부칩니다.', timer_seconds: 240 },
-            { step_number: 3, highlight_action: '뒤집기', action: '뒤집어서 반대편도 3분간 노릇노릇하게 구워 완성합니다.', timer_seconds: 180 },
-          ],
-          tips: ['피자치즈를 토핑하면 퓨전 브런치 감자전으로 변신!'],
         },
         {
           name: '향긋하고 진한 일본식 야채 비프 카레라이스',
@@ -540,38 +551,23 @@ export function generateSmartDynamicPlan(input: UserInputState): MealCartData {
           time: '18분',
           cal: 490,
           shop: ['카레용 소고기 200g', '양파 1망'],
+          sauce: {
+            sauce_name: '버터 양파 캐러멜라이징 & 골든 카레 배합',
+            ingredients: [
+              { name: '고형 또는 분말 카레', amount: '4조각 (100g)' },
+              { name: '버터', amount: '1조각 (15g)' },
+              { name: '케첩 (산미 밸런스)', amount: '1큰술 (15g)' },
+              { name: '진간장', amount: '0.5큰술 (7ml)' },
+            ],
+            mixing_tip: '양파를 버터에 갈색이 될 때까지 오래 볶아 캐러멜라이징하는 것이 전문점 카레 깊은 단맛의 90%를 결정합니다.',
+            taste_kick: '맛의 킥: 케첩 1큰술과 간장 반 큰술을 카레에 더하면 풍미가 훨씬 깊어집니다.',
+          },
           steps: [
-            { step_number: 1, highlight_action: '양파 캐러멜라이징', action: '팬에 버터를 녹이고 채썬 양파를 갈색빛이 돌 때까지 4분간 볶아 단맛을 냅니다.', timer_seconds: 240 },
-            { step_number: 2, highlight_action: '고기 채소 볶기', action: '소고기와 감자, 당근을 넣고 겉면이 익을 때까지 3분간 더 볶습니다.', timer_seconds: 180 },
-            { step_number: 3, highlight_action: '카레 끓이기', action: '물 500ml를 붓고 카레가루를 풀어 약불에서 7분간 뭉근하게 끓여냅니다.', timer_seconds: 420 },
+            { step_number: 1, highlight_action: '양파 캐러멜라이징', heat_level: '중약불', action: '팬에 버터를 녹이고 채 썬 양파를 중약불에서 갈색빛이 돌 때까지 4분간 볶아 달콤한 향을 냅니다.', tip: '타지 않게 중약불에서 은근히 볶아 단맛을 뽑아냅니다.', timer_seconds: 240 },
+            { step_number: 2, highlight_action: '고기 & 채소 볶기', heat_level: '중불', action: '소고기와 깍둑썬 감자, 당근을 넣고 겉면이 익을 때까지 3분간 더 볶습니다.', tip: '소고기 표면을 먼저 시어링해야 육즙이 보존됩니다.', timer_seconds: 180 },
+            { step_number: 3, highlight_action: '물 붓고 카레 풀기', heat_level: '약불', action: '물 500ml를 붓고 끓으면 불을 약불로 줄이고 카레를 잘 풀어 7분간 뭉근하게 끓여냅니다.', tip: '불을 끄거나 아주 약한 불에서 카레를 풀어야 덩어리지지 않습니다.', timer_seconds: 420 },
           ],
-          tips: ['다크 초콜릿 1조각이나 케첩 1T를 넣으면 깊은 풍미 완성'],
-        },
-        {
-          name: '자작하고 매콤한 두부 두루치기 (조림)',
-          category: '조림/반찬 요리',
-          time: '15분',
-          cal: 390,
-          shop: ['두부 1모', '대파 1단'],
-          steps: [
-            { step_number: 1, highlight_action: '두부 부치기', action: '두부를 도톰하게 썰어 들기름을 두른 팬에 앞뒤로 노릇하게 3분간 굽습니다.', timer_seconds: 180 },
-            { step_number: 2, highlight_action: '양념장 붓기', action: '간장 2T, 고춧가루 1.5T, 다진마늘 1T, 설탕 0.5T, 물 150ml를 섞어 붓습니다.', timer_seconds: 60 },
-            { step_number: 3, highlight_action: '자작하게 조리기', action: '대파와 양파를 얹고 약불에서 국물이 자작해질 때까지 5분간 조려 완성합니다.', timer_seconds: 300 },
-          ],
-          tips: ['들기름에 부쳐내면 두부의 고소함이 배가됩니다.'],
-        },
-        {
-          name: '불맛 가득 해물 순두부 짜글이',
-          category: '국/찌개 요리',
-          time: '15분',
-          cal: 420,
-          shop: ['냉동 해물믹스 1봉', '순두부 1봉'],
-          steps: [
-            { step_number: 1, highlight_action: '고추기름 내기', action: '냄비에 식용유 2T, 고춧가루 1.5T, 다진마늘을 넣고 약불에서 1분간 볶습니다.', timer_seconds: 60 },
-            { step_number: 2, highlight_action: '해물 볶기', action: '해물믹스와 송송 썬 대파를 넣고 센 불에서 2분간 빠르게 볶습니다.', timer_seconds: 120 },
-            { step_number: 3, highlight_action: '순두부 조리기', action: '물 200ml와 순두부를 넣고 숟가락으로 큼직하게 으깨며 5분간 끓여 완성합니다.', timer_seconds: 300 },
-          ],
-          tips: ['마지막에 계란 1알을 톡 깨뜨려 잔열로 익혀 드세요.'],
+          tips: ['다크 초콜릿 1조각이나 케첩 1T를 넣으면 깊은 풍미가 완성됩니다.'],
         },
       ];
       const d = generalDishes[idx % generalDishes.length];
@@ -582,6 +578,7 @@ export function generateSmartDynamicPlan(input: UserInputState): MealCartData {
       shoppingForDay.push(...d.shop);
       steps = d.steps;
       tips = d.tips;
+      goldenSauce = d.sauce;
     }
 
 
@@ -596,6 +593,7 @@ export function generateSmartDynamicPlan(input: UserInputState): MealCartData {
       used_pantry_items: pantryForDay,
       used_shopping_items: shoppingForDay,
       calories_per_serving: calories,
+      golden_ratio_sauce: goldenSauce,
       alternative_sauces: tips,
       recipe_steps: steps,
     };

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MealPlanDay } from '../types/mealcart';
-import { ChefHat, Clock, Play, Pause, RotateCcw, AlertCircle, Check, Flame, Sparkles } from 'lucide-react';
+import { ChefHat, Clock, Play, Pause, RotateCcw, AlertCircle, Check, Flame, Sparkles, Copy, CheckCircle2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { FOOD_IMAGES } from '../services/geminiService';
 
@@ -14,8 +14,26 @@ export const VisualRecipe: React.FC<VisualRecipeProps> = ({ day, familySize }) =
   const [secondsLeft, setSecondsLeft] = useState<number>(0);
   const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false);
   const [completedSteps, setCompletedSteps] = useState<Record<number, boolean>>({});
+  const [sauceCopied, setSauceCopied] = useState<boolean>(false);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleCopySauce = () => {
+    if (!day.golden_ratio_sauce) return;
+    const s = day.golden_ratio_sauce;
+    let text = `✨ [MealCart AI] ${day.menu_name}\n`;
+    text += `🥄 ${s.sauce_name}\n\n`;
+    text += `[황금 양념 비율 배합표]\n`;
+    s.ingredients.forEach((ing) => {
+      text += ` • ${ing.name}: ${ing.amount}\n`;
+    });
+    if (s.mixing_tip) text += `\n🥣 배합 비법: ${s.mixing_tip}\n`;
+    if (s.taste_kick) text += `💡 맛의 킥: ${s.taste_kick}\n`;
+
+    navigator.clipboard.writeText(text);
+    setSauceCopied(true);
+    setTimeout(() => setSauceCopied(false), 2000);
+  };
 
   const playChimeSound = () => {
     try {
@@ -215,6 +233,84 @@ export const VisualRecipe: React.FC<VisualRecipeProps> = ({ day, familySize }) =
           </div>
         </div>
 
+        {/* Golden Ratio Sauce Card - Chef Verified */}
+        {day.golden_ratio_sauce && (
+          <div className="p-4 sm:p-5 rounded-2xl border-2 border-forest bg-cream-soft/85 shadow-solid-sm space-y-3.5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2.5 border-b-2 border-forest/15">
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="font-script text-coral text-base font-bold select-none">
+                    Chef's Secret Sauce
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-coral text-white border border-forest shadow-xs">
+                    맛 검증 완료 💯
+                  </span>
+                </div>
+                <h3 className="text-base sm:text-lg font-black text-forest flex items-center gap-1.5 mt-0.5">
+                  <span>🥄</span>
+                  <span>{day.golden_ratio_sauce.sauce_name}</span>
+                </h3>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleCopySauce}
+                className="self-start sm:self-auto flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white hover:bg-lime text-forest border border-forest text-xs font-black shadow-xs transition-all active:translate-y-0.5 cursor-pointer shrink-0"
+              >
+                {sauceCopied ? (
+                  <>
+                    <CheckCircle2 className="w-3.5 h-3.5 text-forest" />
+                    <span>양념 복사 완료!</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-3.5 h-3.5 text-forest" />
+                    <span>양념 배합 복사</span>
+                  </>
+                )}
+              </button>
+            </div>
+
+            {/* Ingredients ratio grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {day.golden_ratio_sauce.ingredients.map((ing, i) => (
+                <div
+                  key={i}
+                  className="p-2.5 rounded-xl bg-white border-2 border-forest/20 flex flex-col justify-between shadow-2xs hover:border-forest transition-colors"
+                >
+                  <span className="text-[11px] font-black text-forest truncate">{ing.name}</span>
+                  <span className="text-xs font-black text-coral mt-1 bg-coral/10 px-2 py-0.5 rounded-md self-start border border-coral/20">
+                    {ing.amount}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* Mixing tip & Taste kick */}
+            <div className="space-y-2 pt-1 text-xs">
+              {day.golden_ratio_sauce.mixing_tip && (
+                <div className="p-3 rounded-xl bg-white/95 border border-forest/20 text-forest font-medium flex items-start gap-2 leading-relaxed">
+                  <span className="shrink-0 text-base">🥣</span>
+                  <div>
+                    <strong className="text-forest font-black">배합 & 숙성 비법: </strong>
+                    <span className="text-forest/90 font-semibold">{day.golden_ratio_sauce.mixing_tip}</span>
+                  </div>
+                </div>
+              )}
+
+              {day.golden_ratio_sauce.taste_kick && (
+                <div className="p-3 rounded-xl bg-lime/30 border-2 border-forest text-forest font-medium flex items-start gap-2 leading-relaxed shadow-xs">
+                  <span className="shrink-0 text-base">💡</span>
+                  <div>
+                    <strong className="text-forest font-black">셰프의 맛의 킥: </strong>
+                    <span className="text-forest font-black">{day.golden_ratio_sauce.taste_kick}</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
         {/* Step-by-Step Cooking Guide */}
         <div>
           <div className="border-b-2 border-forest/15 pb-3 mb-4">
@@ -260,19 +356,43 @@ export const VisualRecipe: React.FC<VisualRecipeProps> = ({ day, familySize }) =
 
                       {/* Step details */}
                       <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1">
+                        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-1.5">
                           <span className="text-[11px] font-black text-lime bg-forest px-2 py-0.5 rounded-full border border-forest">
                             STEP {step.step_number}
                           </span>
+                          {step.heat_level && (
+                            <span className={`text-[10px] font-black px-2 py-0.5 rounded-full border shadow-2xs flex items-center gap-1 ${
+                              step.heat_level === '강불' || step.heat_level === '중강불'
+                                ? 'bg-coral text-white border-forest'
+                                : step.heat_level === '중불' || step.heat_level === '중약불'
+                                ? 'bg-amber-100 text-forest border-forest/40'
+                                : step.heat_level === '약불'
+                                ? 'bg-blue-50 text-forest border-forest/40'
+                                : 'bg-cream text-forest border-forest/30'
+                            }`}>
+                              <span>
+                                {step.heat_level.includes('강') ? '🔥' : step.heat_level.includes('중') ? '♨️' : step.heat_level === '약불' ? '🕯️' : '🌱'}
+                              </span>
+                              <span>{step.heat_level}</span>
+                            </span>
+                          )}
                           {step.highlight_action && (
                             <span className="text-xs font-black text-coral">
                               [{step.highlight_action}]
                             </span>
                           )}
                         </div>
-                        <p className={`text-xs sm:text-sm text-forest leading-relaxed font-medium ${isChecked ? 'line-through text-sage' : ''}`}>
+                        <p className={`text-xs sm:text-sm text-forest leading-relaxed font-semibold ${isChecked ? 'line-through text-sage' : ''}`}>
                           {step.action}
                         </p>
+
+                        {/* Chef Tip */}
+                        {step.tip && (
+                          <div className="mt-2 p-2.5 rounded-xl bg-cream-soft border border-forest/15 text-[11px] text-forest/90 font-medium flex items-start gap-1.5 leading-relaxed">
+                            <span className="text-coral shrink-0">💡</span>
+                            <span><strong>실패 방지 팁: </strong>{step.tip}</span>
+                          </div>
+                        )}
                       </div>
                     </div>
 

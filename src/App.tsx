@@ -19,7 +19,10 @@ export function App() {
     const cached = localStorage.getItem('MEALCART_SAVED_PLAN');
     if (cached) {
       try {
-        return JSON.parse(cached);
+        const parsed = JSON.parse(cached);
+        if (parsed?.weekly_plan?.[0]?.golden_ratio_sauce) {
+          return parsed;
+        }
       } catch (e) {
         console.error('Failed to parse cached plan:', e);
       }
